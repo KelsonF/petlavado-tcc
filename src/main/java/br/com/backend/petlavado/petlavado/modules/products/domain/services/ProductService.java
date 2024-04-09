@@ -64,8 +64,7 @@ public class ProductService {
      * Updates an existing product for the specified store.
      */
     public Product updateProduct(Integer storeId, Integer productId, ProductDto data){
-
-        Store store = storeService.getStoreOrNull(storeId)
+        storeService.getStoreOrNull(storeId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Store with ID " + storeId + " not found"));
 
@@ -82,6 +81,22 @@ public class ProductService {
         BeanUtils.copyProperties(data, existingProduct);
 
         return productRepository.save(existingProduct);
+    }
+
+    /**
+     * Deletes a product.
+     */
+    public void deleteProduct(Integer storeId, Integer productId){
+
+        storeService.getStoreOrNull(storeId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Park with Id" + storeId + "not found")
+        );
+
+        Product product = getProductOrNull(productId).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with id" + productId + "was not found")
+        );
+
+        productRepository.delete(product);
     }
 
     /**

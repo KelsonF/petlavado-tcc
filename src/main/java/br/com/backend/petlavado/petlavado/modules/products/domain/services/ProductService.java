@@ -32,6 +32,14 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> listProductsByStore(Integer storeId){
+        Store store = storeService.getStoreOrNull(storeId).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Store with id" + storeId + "was not found")
+        );
+
+        return productRepository.findProductByStore(store);
+    }
+
     public Product createProduct(Integer storeId, ProductDto productDto){
         Store store = storeService.getStoreOrNull(storeId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.BAD_REQUEST, "Store with ID " + storeId + " not found")

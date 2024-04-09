@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("/")
 public class ProductsController {
     private final ProductService productService;
 
@@ -19,9 +19,15 @@ public class ProductsController {
     ){
         this.productService = productService;
     }
-    @GetMapping("list-all")
+    @GetMapping("products")
     public ResponseEntity<List<Product>> listAllProducts(){
         List<Product> productList = productService.listAllProducts();
+        return ResponseEntity.ok(productList);
+    }
+
+    @GetMapping("/{storeId}/products")
+    public ResponseEntity<List<Product>> listAllProductsByStore(@PathVariable Integer storeId){
+        List<Product> productList = productService.listProductsByStore(storeId);
         return ResponseEntity.ok(productList);
     }
 

@@ -25,6 +25,12 @@ public class ProductsController {
         return ResponseEntity.ok(productList);
     }
 
+    @GetMapping("products/search")
+    public ResponseEntity<List<Product>> listAllProductsByTerm(@RequestParam String searchTerm){
+        List<Product> productList = productService.getProductBySearchTerm(searchTerm);
+        return ResponseEntity.ok(productList);
+    }
+
     @GetMapping("/{storeId}/products")
     public ResponseEntity<List<Product>> listAllProductsByStore(@PathVariable Integer storeId){
         List<Product> productList = productService.listProductsByStore(storeId);

@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,15 @@ public class ProductService {
                 ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with id " + storeId + " was not found")
         );
         return productRepository.findProductByStore(store);
+    }
+
+    /**
+     * Lists products by search term.
+     */
+    public List<Product> getProductBySearchTerm(String searchTerm){
+        Assert.hasText(searchTerm, "Search term cannot be empty");
+
+        return productRepository.findProductByDescriptionContainingIgnoreCaseOrderByStore(searchTerm);
     }
 
     /**

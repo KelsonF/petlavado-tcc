@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer> {
     List<Product> findProductByStore(Store store);
+    List<Product> findProductByDescriptionContainingIgnoreCaseOrderByStore(String searchTerm);
 }

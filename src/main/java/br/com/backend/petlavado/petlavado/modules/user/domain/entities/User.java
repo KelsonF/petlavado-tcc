@@ -20,7 +20,7 @@ import lombok.Setter;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private Integer id;
 
   @NotBlank(message = "The description cannot be empty")
   @NotNull

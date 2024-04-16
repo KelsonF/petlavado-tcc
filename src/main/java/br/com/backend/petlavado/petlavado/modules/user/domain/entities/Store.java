@@ -14,26 +14,11 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-public class Store {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Store extends User {
 
     @NotBlank(message = "The name cannot be empty")
     @NotNull
-    public String name;
-
-    @NotBlank(message = "The description cannot be empty")
-    @NotNull
-    public String description;
-
-    @NotBlank(message = "The email cannot be empty")
-    @NotNull
-    public String email;
-
-    @NotBlank(message = "The phone number cannot be empty")
-    @NotNull
-    public String phoneNumber;
+    public String storeName;
 
     @NotBlank(message = "The cnpj cannot be empty")
     @NotNull
@@ -42,11 +27,9 @@ public class Store {
     @OneToMany
     private List<Product> products;
 
-    public Store(String name, String description, String email, String phoneNumber, String cnpj) {
-        this.name = name;
-        this.description = description;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+    public Store(String storeName, String description, String email, String phoneNumber, String cnpj) {
+        super(description, email, phoneNumber);
+        this.storeName = storeName;
         this.cnpj = cnpj;
     }
 }

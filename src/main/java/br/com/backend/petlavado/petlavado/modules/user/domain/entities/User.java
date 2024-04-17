@@ -1,5 +1,7 @@
 package br.com.backend.petlavado.petlavado.modules.user.domain.entities;
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,14 +21,14 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id;
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private UUID id;
 
   @NotBlank(message = "The description cannot be empty")
   @NotNull
   public String description;
 
-  @NotBlank(message = "The email cannot be empty") 
+  @NotBlank(message = "The email cannot be empty")
   @NotNull
   private String email;
 
@@ -34,7 +36,7 @@ public class User {
   @NotNull
   public String phoneNumber;
 
-  public User(String description,String email, String phoneNumber){
+  public User(String description, String email, String phoneNumber) {
     this.description = description;
     this.email = email;
     this.phoneNumber = phoneNumber;

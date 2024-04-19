@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -22,8 +23,7 @@ public class ProductService {
     @Autowired
     public ProductService(
             ProductRepository productRepository,
-            StoreService storeService
-    ){
+            StoreService storeService) {
         this.productRepository = productRepository;
         this.storeService = storeService;
     }
@@ -31,24 +31,23 @@ public class ProductService {
     /**
      * Lists all products.
      */
-    public List<Product> listAllProducts(){
+    public List<Product> listAllProducts() {
         return productRepository.findAll();
     }
 
     /**
      * Lists products by store.
      */
-    public List<Product> listProductsByStore(Integer storeId){
+    public List<Product> listProductsByStore(UUID storeId) {
         Store store = storeService.getStoreOrNull(storeId).orElseThrow(
-                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with id " + storeId + " was not found")
-        );
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with id " + storeId + " was not found"));
         return productRepository.findProductByStore(store);
     }
 
     /**
      * Lists products by search term.
      */
-    public List<Product> getProductBySearchTerm(String searchTerm){
+    public List<Product> getProductBySearchTerm(String searchTerm) {
         Assert.hasText(searchTerm, "Search term cannot be empty");
 
         return productRepository.findProductByDescriptionContainingIgnoreCaseOrderByStore(searchTerm);
@@ -57,10 +56,9 @@ public class ProductService {
     /**
      * Creates a new product for the specified store.
      */
-    public Product createProduct(Integer storeId, ProductDto productDto){
-        Store store = storeService.getStoreOrNull(storeId).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with ID " + storeId + " not found")
-        );
+    public Product createProduct(UUID storeId, ProductDto productDto) {
+        Store store = storeService.getStoreOrNull(storeId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with ID " + storeId + " not found"));
 
         Product newProduct = new Product();
         BeanUtils.copyProperties(productDto, newProduct);
@@ -73,7 +71,7 @@ public class ProductService {
     /**
      * Updates an existing product for the specified store.
      */
-    public Product updateProduct(Integer storeId, Integer productId, ProductDto data){
+    public Product updateProduct(UUID storeId, UUID productId, ProductDto data) {
         storeService.getStoreOrNull(storeId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Store with ID " + storeId + " not found"));
@@ -96,15 +94,14 @@ public class ProductService {
     /**
      * Deletes a product.
      */
-    public void deleteProduct(Integer storeId, Integer productId){
+    public void deleteProduct(UUID storeId, UUID productId) {
 
         storeService.getStoreOrNull(storeId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Park with Id" + storeId + "not found")
-        );
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Park with Id" + storeId + "not found"));
 
         Product product = getProductOrNull(productId).orElseThrow(
-                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with id" + productId + "was not found")
-        );
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Product with id" + productId + "was not found"));
 
         productRepository.delete(product);
     }
@@ -112,8 +109,7 @@ public class ProductService {
     /**
      * Retrieves a product by ID, returning null if not found.
      */
-    public Optional<Product> getProductOrNull(Integer productId){
+    public Optional<Product> getProductOrNull(UUID productId) {
         return productRepository.findById(productId);
     }
 }
-

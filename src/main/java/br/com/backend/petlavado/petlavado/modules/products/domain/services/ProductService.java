@@ -3,14 +3,16 @@ package br.com.backend.petlavado.petlavado.modules.products.domain.services;
 import br.com.backend.petlavado.petlavado.modules.products.domain.dtos.ProductDto;
 import br.com.backend.petlavado.petlavado.modules.products.domain.entities.Product;
 import br.com.backend.petlavado.petlavado.modules.products.domain.repositories.ProductRepository;
-import br.com.backend.petlavado.petlavado.modules.user.domain.entities.Store;
-import br.com.backend.petlavado.petlavado.modules.user.domain.services.StoreService;
+import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
+
+import br.com.backend.petlavado.petlavado.modules.store.domain.services.StoreService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,7 +25,8 @@ public class ProductService {
     @Autowired
     public ProductService(
             ProductRepository productRepository,
-            StoreService storeService) {
+            StoreService storeService
+    ){
         this.productRepository = productRepository;
         this.storeService = storeService;
     }
@@ -31,23 +34,24 @@ public class ProductService {
     /**
      * Lists all products.
      */
-    public List<Product> listAllProducts() {
+    public List<Product> listAllProducts(){
         return productRepository.findAll();
     }
 
     /**
      * Lists products by store.
      */
-    public List<Product> listProductsByStore(UUID storeId) {
+    public List<Product> listProductsByStore(UUID storeId){
         Store store = storeService.getStoreOrNull(storeId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with id " + storeId + " was not found"));
+                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with id " + storeId + " was not found")
+        );
         return productRepository.findProductByStore(store);
     }
 
     /**
      * Lists products by search term.
      */
-    public List<Product> getProductBySearchTerm(String searchTerm) {
+    public List<Product> getProductBySearchTerm(String searchTerm){
         Assert.hasText(searchTerm, "Search term cannot be empty");
 
         return productRepository.findProductByDescriptionContainingIgnoreCaseOrderByStore(searchTerm);
@@ -56,22 +60,25 @@ public class ProductService {
     /**
      * Creates a new product for the specified store.
      */
-    public Product createProduct(UUID storeId, ProductDto productDto) {
-        Store store = storeService.getStoreOrNull(storeId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with ID " + storeId + " not found"));
+    public Product createProduct(UUID storeId, ProductDto data){
+        Store store = storeService.getStoreOrNull(storeId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with ID " + storeId + " not found")
+        );
 
-        Product newProduct = new Product();
-        BeanUtils.copyProperties(productDto, newProduct);
-
-        newProduct.setStore(store);
-
-        return productRepository.save(newProduct);
+        return productRepository.save(
+                new Product(
+                        data.getDescription(),
+                        data.getValue(),
+                        data.getImageUrl(),
+                        store
+                )
+        );
     }
 
     /**
      * Updates an existing product for the specified store.
      */
-    public Product updateProduct(UUID storeId, UUID productId, ProductDto data) {
+    public Product updateProduct(UUID storeId, UUID productId, ProductDto data){
         storeService.getStoreOrNull(storeId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Store with ID " + storeId + " not found"));
@@ -94,14 +101,15 @@ public class ProductService {
     /**
      * Deletes a product.
      */
-    public void deleteProduct(UUID storeId, UUID productId) {
+    public void deleteProduct(UUID storeId, UUID productId){
 
         storeService.getStoreOrNull(storeId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Park with Id" + storeId + "not found"));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Park with Id" + storeId + "not found")
+        );
 
         Product product = getProductOrNull(productId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Product with id" + productId + "was not found"));
+                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with id" + productId + "was not found")
+        );
 
         productRepository.delete(product);
     }
@@ -109,7 +117,7 @@ public class ProductService {
     /**
      * Retrieves a product by ID, returning null if not found.
      */
-    public Optional<Product> getProductOrNull(UUID productId) {
+    public Optional<Product> getProductOrNull(UUID productId){
         return productRepository.findById(productId);
     }
 }

@@ -1,22 +1,22 @@
 package br.com.backend.petlavado.petlavado.modules.products.domain.entities;
 
-import br.com.backend.petlavado.petlavado.modules.user.domain.entities.Store;
+import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @NotEmpty
     private String description;
@@ -30,6 +30,12 @@ public class Product {
     @ManyToOne
     private Store store;
 
-    public Product() {
+    protected Product() {}
+
+    public Product(String description, Double value, String imageUrl, Store store) {
+        this.description = description;
+        this.value = value;
+        this.imageUrl = imageUrl;
+        this.store = store;
     }
 }

@@ -16,31 +16,31 @@ public class ProductsController {
     private final ProductService productService;
 
     ProductsController(
-            ProductService productService) {
+            ProductService productService
+    ){
         this.productService = productService;
     }
-
     @GetMapping("products")
-    public ResponseEntity<List<Product>> listAllProducts() {
+    public ResponseEntity<List<Product>> listAllProducts(){
         List<Product> productList = productService.listAllProducts();
         return ResponseEntity.ok(productList);
     }
 
     @GetMapping("products/search")
-    public ResponseEntity<List<Product>> listAllProductsByTerm(@RequestParam String searchTerm) {
+    public ResponseEntity<List<Product>> listAllProductsByTerm(@RequestParam String searchTerm){
         List<Product> productList = productService.getProductBySearchTerm(searchTerm);
         return ResponseEntity.ok(productList);
     }
 
     @GetMapping("/{storeId}/products")
-    public ResponseEntity<List<Product>> listAllProductsByStore(@PathVariable UUID storeId) {
+    public ResponseEntity<List<Product>> listAllProductsByStore(@PathVariable UUID storeId){
         List<Product> productList = productService.listProductsByStore(storeId);
         return ResponseEntity.ok(productList);
     }
 
     @PostMapping("/{storeId}/create")
-    public ResponseEntity<Product> createProduct(@PathVariable UUID storeId, ProductDto productDto) {
-        Product createdProduct = productService.createProduct(storeId, productDto);
+    public ResponseEntity<Product> createProduct(@PathVariable UUID storeId, ProductDto productDto){
+        Product createdProduct = productService.createProduct(storeId,productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
@@ -48,7 +48,8 @@ public class ProductsController {
     public ResponseEntity<Product> updateProduct(
             @PathVariable UUID productId,
             @PathVariable UUID storeId,
-            ProductDto data) {
+            ProductDto data
+    ){
         Product updatedProduct = productService.updateProduct(storeId, productId, data);
 
         return ResponseEntity.ok(updatedProduct);
@@ -57,7 +58,8 @@ public class ProductsController {
     @DeleteMapping("/{storeId}/{productId}/delete")
     public ResponseEntity<Void> deleteProduct(
             @PathVariable UUID storeId,
-            @PathVariable UUID productId) {
+            @PathVariable UUID productId
+    ){
         productService.deleteProduct(storeId, productId);
         return ResponseEntity.noContent().build();
     }

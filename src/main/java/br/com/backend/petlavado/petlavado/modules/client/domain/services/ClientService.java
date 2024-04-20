@@ -48,10 +48,8 @@ public class ClientService {
     }
 
     public void deleteClient(UUID id) {
-        if (!clientRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found");
-        }
+        Client client = findById(id);
 
-        clientRepository.deleteById(id);
+        clientRepository.delete(client);
     }
 }

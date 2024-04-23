@@ -27,7 +27,7 @@ public class StoreController {
         return ResponseEntity.ok(stores);
     }
 
-    @PostMapping("")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Store> createStore(@RequestBody StoreDto dto) {
         Store store = storeService.createStore(dto);

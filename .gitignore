@@ -33,3 +33,4 @@ build/
 ### VS Code ###
 .vscode/
 database_data
+.env

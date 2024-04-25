@@ -31,39 +31,23 @@ public class ProductService {
         this.storeService = storeService;
     }
 
-    /**
-     * Lists all products.
-     */
     public List<Product> listAllProducts(){
         return productRepository.findAll();
     }
 
-    /**
-     * Lists products by store.
-     */
     public List<Product> listProductsByStore(UUID storeId){
-        Store store = storeService.getStoreOrNull(storeId).orElseThrow(
-                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with id " + storeId + " was not found")
-        );
+        Store store = storeService.getStoreById(storeId);
         return productRepository.findProductByStore(store);
     }
 
-    /**
-     * Lists products by search term.
-     */
     public List<Product> getProductBySearchTerm(String searchTerm){
         Assert.hasText(searchTerm, "Search term cannot be empty");
 
         return productRepository.findProductByDescriptionContainingIgnoreCaseOrderByStore(searchTerm);
     }
 
-    /**
-     * Creates a new product for the specified store.
-     */
     public Product createProduct(UUID storeId, ProductDto data){
-        Store store = storeService.getStoreOrNull(storeId).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Store with ID " + storeId + " not found")
-        );
+        Store store = storeService.getStoreById(storeId);
 
         return productRepository.save(
                 new Product(
@@ -75,13 +59,8 @@ public class ProductService {
         );
     }
 
-    /**
-     * Updates an existing product for the specified store.
-     */
     public Product updateProduct(UUID storeId, UUID productId, ProductDto data){
-        storeService.getStoreOrNull(storeId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Store with ID " + storeId + " not found"));
+        storeService.getStoreById(storeId);
 
         Product existingProduct = getProductOrNull(productId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -98,14 +77,9 @@ public class ProductService {
         return productRepository.save(existingProduct);
     }
 
-    /**
-     * Deletes a product.
-     */
     public void deleteProduct(UUID storeId, UUID productId){
 
-        storeService.getStoreOrNull(storeId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Park with Id" + storeId + "not found")
-        );
+        storeService.getStoreById(storeId);
 
         Product product = getProductOrNull(productId).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with id" + productId + "was not found")
@@ -114,9 +88,6 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    /**
-     * Retrieves a product by ID, returning null if not found.
-     */
     public Optional<Product> getProductOrNull(UUID productId){
         return productRepository.findById(productId);
     }

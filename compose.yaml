@@ -1,9 +1,45 @@
 services:
-  postgres:
-    image: 'postgres:latest'
+  postgresdb:
+    image: 'postgres:alpine'
+    container_name: postgres
+    env_file: ./.env
     environment:
-      - 'POSTGRES_DB=pet_lavado_db'
-      - 'POSTGRES_PASSWORD=kelsu1234'
-      - 'POSTGRES_USER=petlavado'
+      - 'POSTGRES_DB=$POSTGRESDB_DATABASE'
+      - 'POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD'
+      - 'POSTGRES_USER=$POSTGRESDB_USER'
     ports:
-      - '5432'
+      - '5432:5432'
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  meili_search:
+    image: getmeili/meilisearch:v1.7
+    container_name: meilisearch
+    ports:
+      - '7700:7700'
+    environment:
+      - MEILI_MASTER_KEY=secure_master_key_here
+    volumes:
+      - ./meili_data:/data.ms
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    env_file: ./.env
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/${POSTGRESDB_DATABASE}'
+    depends_on:
+      - postgresdb
+    volumes:
+      - .:/app:rw
+    stdin_open: true
+    tty: true
+    ports:
+      - '8080:8080'
+
+volumes:
+  postgres_data:
+  meili_data:
+

@@ -1,8 +1,9 @@
-package br.com.backend.petlavado.petlavado.modules.products.api;
+package br.com.backend.petlavado.petlavado.modules.store.api;
 
-import br.com.backend.petlavado.petlavado.modules.products.domain.dtos.ProductDto;
-import br.com.backend.petlavado.petlavado.modules.products.domain.entities.Product;
-import br.com.backend.petlavado.petlavado.modules.products.domain.services.ProductService;
+import br.com.backend.petlavado.petlavado.modules.store.domain.dtos.ProductDto;
+import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Product;
+import br.com.backend.petlavado.petlavado.modules.store.domain.services.ProductService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

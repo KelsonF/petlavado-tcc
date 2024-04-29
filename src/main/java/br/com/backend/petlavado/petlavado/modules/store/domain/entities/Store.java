@@ -1,6 +1,5 @@
 package br.com.backend.petlavado.petlavado.modules.store.domain.entities;
 
-import br.com.backend.petlavado.petlavado.modules.products.domain.entities.Product;
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.User;
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserRole;
 import jakarta.persistence.Entity;

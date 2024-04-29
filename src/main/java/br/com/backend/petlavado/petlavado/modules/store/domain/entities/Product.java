@@ -1,6 +1,5 @@
-package br.com.backend.petlavado.petlavado.modules.products.domain.entities;
+package br.com.backend.petlavado.petlavado.modules.store.domain.entities;
 
-import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

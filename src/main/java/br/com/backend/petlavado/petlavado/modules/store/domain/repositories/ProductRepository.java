@@ -1,6 +1,6 @@
-package br.com.backend.petlavado.petlavado.modules.products.domain.repositories;
+package br.com.backend.petlavado.petlavado.modules.store.domain.repositories;
 
-import br.com.backend.petlavado.petlavado.modules.products.domain.entities.Product;
+import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Product;
 import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 

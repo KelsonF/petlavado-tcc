@@ -37,7 +37,8 @@ public class StoreService {
                         storeDto.getPassword(),
                         storeDto.getPhoneNumber(),
                         storeDto.getCnpj(),
-                        UserRole.STORE
+                        UserRole.STORE,
+                        ""
                 )
         );
     }

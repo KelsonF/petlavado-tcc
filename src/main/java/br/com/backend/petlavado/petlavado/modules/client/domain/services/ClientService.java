@@ -42,7 +42,8 @@ public class ClientService {
                         data.getPassword(),
                         data.getPhoneNumber(),
                         data.getCpf(),
-                        UserRole.CLIENT
+                        UserRole.CLIENT,
+                        ""
                 )
         );
     }

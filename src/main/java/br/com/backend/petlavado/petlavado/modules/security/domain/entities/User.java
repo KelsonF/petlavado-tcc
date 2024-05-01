@@ -35,11 +35,15 @@ public class User {
     @NotNull
     private UserRole userRole;
 
-    public User(String email, String password, String phoneNumber, UserRole userRole) {
+    @NotNull
+    private String geolocation;
+
+    public User(String email, String password, String phoneNumber, UserRole userRole, String geolocation) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.userRole = userRole;
+        this.geolocation = geolocation;
     }
 
     public String getIdString() {

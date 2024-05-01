@@ -31,8 +31,16 @@ public class Store extends User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Product> products = Collections.emptyList();
 
-    public Store(String storeName, String email, String password, String phoneNumber, String cnpj, UserRole userRole) {
-        super(email,password,phoneNumber, userRole);
+    public Store(
+        String storeName, 
+        String email, 
+        String password, 
+        String phoneNumber, 
+        String cnpj, 
+        UserRole userRole, 
+        String geolocation
+    ) {
+        super(email,password,phoneNumber, userRole, geolocation);
         this.storeName = storeName;
         this.cnpj = cnpj;
     }

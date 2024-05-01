@@ -22,8 +22,16 @@ public class Client extends User {
 
     protected Client() {}
 
-    public Client(String name, String email, String password, String phoneNumber, String cpf, UserRole userRole) {
-        super(email, password, phoneNumber, userRole);
+    public Client(
+        String name, 
+        String email, 
+        String password, 
+        String phoneNumber, 
+        String cpf, 
+        UserRole userRole,
+        String geolocation
+    ) {
+        super(email, password, phoneNumber, userRole, geolocation);
         this.name = name;
         this.cpf = cpf;
     }

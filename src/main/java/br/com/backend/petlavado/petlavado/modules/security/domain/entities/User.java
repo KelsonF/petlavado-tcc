@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Entity
 @Getter
@@ -52,7 +54,10 @@ public class User {
         return this.id.toString();
     }
 
-    public Collection<? extends GrantedAuthority> getAuthoraties(){
-        return null;
+    public Collection<? extends GrantedAuthority> getAuthoraties() {
+        if (this.userRole == UserRole.STORE)
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
+        else
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 }

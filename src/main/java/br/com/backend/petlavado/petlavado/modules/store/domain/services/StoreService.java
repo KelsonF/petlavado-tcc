@@ -6,6 +6,7 @@ import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import br.com.backend.petlavado.petlavado.modules.store.domain.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,20 +25,21 @@ public class StoreService {
         return storeRepository.findAll();
     }
 
-    public Store createStore(StoreDto storeDto) {
-        if (storeRepository.findByEmail(storeDto.getEmail()) != null) {
+    public Store createStore(StoreDto data) {
+        if (storeRepository.findByEmail(data.getEmail()) != null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Email already in use");
         }
 
+        var encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
+
         return storeRepository.save(
                 new Store(
-                        storeDto.getStoreName(),
-                        storeDto.getEmail(),
-                        storeDto.getPassword(),
-                        storeDto.getPhoneNumber(),
-                        storeDto.getCnpj(),
-                        UserRole.STORE,
-                        ""
+                    data.getStoreName(),
+                    data.getEmail(),
+                    encryptedPassword,
+                    data.getPhoneNumber(),
+                    data.getCnpj(),
+                    UserRole.STORE
                 )
         );
     }

@@ -6,6 +6,7 @@ import br.com.backend.petlavado.petlavado.modules.client.domain.repositories.Cli
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Collection;
@@ -33,16 +34,17 @@ public class ClientService {
         if (clientRepository.findByEmail(data.getEmail()) != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email já esta em uso");
         }
+        
+        var encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
 
         return clientRepository.save(
                 new Client(
-                        data.getName(),
-                        data.getEmail(),
-                        data.getPassword(),
-                        data.getPhoneNumber(),
-                        data.getCpf(),
-                        UserRole.CLIENT,
-                        ""
+                    data.getName(),
+                    data.getEmail(),
+                    encryptedPassword,
+                    data.getPhoneNumber(),
+                    data.getCpf(),
+                    UserRole.CLIENT
                 )
         );
     }

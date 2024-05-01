@@ -28,10 +28,9 @@ public class Client extends User {
         String password, 
         String phoneNumber, 
         String cpf, 
-        UserRole userRole,
-        String geolocation
+        UserRole userRole
     ) {
-        super(email, password, phoneNumber, userRole, geolocation);
+        super(email, password, phoneNumber, userRole);
         this.name = name;
         this.cpf = cpf;
     }

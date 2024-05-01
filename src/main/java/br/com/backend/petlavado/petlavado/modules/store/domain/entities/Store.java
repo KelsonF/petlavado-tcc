@@ -37,10 +37,9 @@ public class Store extends User {
         String password, 
         String phoneNumber, 
         String cnpj, 
-        UserRole userRole, 
-        String geolocation
+        UserRole userRole
     ) {
-        super(email,password,phoneNumber, userRole, geolocation);
+        super(email,password,phoneNumber, userRole);
         this.storeName = storeName;
         this.cnpj = cnpj;
     }

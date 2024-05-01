@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
-import java.util.UUID;
 
 @Service
 public class StoreService {
@@ -43,13 +42,13 @@ public class StoreService {
         );
     }
 
-    public void deleteStore(UUID storeId) {
+    public void deleteStore(Integer storeId) {
         Store store = getStoreById(storeId);
 
         storeRepository.delete(store);
     }
 
-    public Store getStoreById(UUID storeId) {
+    public Store getStoreById(Integer storeId) {
         return storeRepository.findById(storeId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found")
         );

@@ -34,21 +34,21 @@ public class ProductsController {
     }
 
     @GetMapping("/{storeId}/products")
-    public ResponseEntity<List<Product>> listAllProductsByStore(@PathVariable UUID storeId){
+    public ResponseEntity<List<Product>> listAllProductsByStore(@PathVariable Integer storeId){
         List<Product> productList = productService.listProductsByStore(storeId);
         return ResponseEntity.ok(productList);
     }
 
     @PostMapping("/{storeId}/create")
-    public ResponseEntity<Product> createProduct(@PathVariable UUID storeId, ProductDto productDto){
+    public ResponseEntity<Product> createProduct(@PathVariable Integer storeId, ProductDto productDto){
         Product createdProduct = productService.createProduct(storeId,productDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
     @PostMapping("/{storeId}/{productId}/update")
     public ResponseEntity<Product> updateProduct(
-            @PathVariable UUID productId,
-            @PathVariable UUID storeId,
+            @PathVariable Integer productId,
+            @PathVariable Integer storeId,
             ProductDto data
     ){
         Product updatedProduct = productService.updateProduct(storeId, productId, data);
@@ -58,8 +58,8 @@ public class ProductsController {
 
     @DeleteMapping("/{storeId}/{productId}/delete")
     public ResponseEntity<Void> deleteProduct(
-            @PathVariable UUID storeId,
-            @PathVariable UUID productId
+            @PathVariable Integer storeId,
+            @PathVariable Integer productId
     ){
         productService.deleteProduct(storeId, productId);
         return ResponseEntity.noContent().build();

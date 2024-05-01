@@ -24,7 +24,7 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Client findById(UUID id) {
+    public Client findById(Integer id) {
         return clientRepository.findById(id).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found")
         );
@@ -48,7 +48,7 @@ public class ClientService {
         );
     }
 
-    public void deleteClient(UUID id) {
+    public void deleteClient(Integer id) {
         Client client = findById(id);
 
         clientRepository.delete(client);

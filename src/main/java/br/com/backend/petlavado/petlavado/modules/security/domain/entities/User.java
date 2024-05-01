@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Getter
@@ -17,8 +19,8 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id;
 
     @NotBlank(message = "The password cannot be empty")
     @NotNull
@@ -48,5 +50,9 @@ public class User {
 
     public String getIdString() {
         return this.id.toString();
+    }
+
+    public Collection<? extends GrantedAuthority> getAuthoraties(){
+        return null;
     }
 }

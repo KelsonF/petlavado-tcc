@@ -4,7 +4,6 @@ import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserR
 import br.com.backend.petlavado.petlavado.modules.store.domain.dtos.StoreDto;
 import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import br.com.backend.petlavado.petlavado.modules.store.domain.repositories.StoreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import java.util.Collection;
 public class StoreService {
     private final StoreRepository storeRepository;
 
-    @Autowired
     public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
     }

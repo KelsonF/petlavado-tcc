@@ -6,7 +6,6 @@ import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import br.com.backend.petlavado.petlavado.modules.store.domain.repositories.ProductRepository;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -20,10 +19,9 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final StoreService storeService;
 
-    @Autowired
     public ProductService(
-            ProductRepository productRepository,
-            StoreService storeService
+        ProductRepository productRepository,
+        StoreService storeService
     ){
         this.productRepository = productRepository;
         this.storeService = storeService;

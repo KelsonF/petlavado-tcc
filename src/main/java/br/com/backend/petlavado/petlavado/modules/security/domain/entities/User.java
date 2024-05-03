@@ -39,16 +39,27 @@ public class User {
     @NotNull
     private UserRole userRole;
 
+    @NotNull
+    private String geoLocation;
+
     public User(String email, String password, String phoneNumber, UserRole userRole) {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.userRole = userRole;
+        this.geoLocation = "";
     }
 
     public String getIdString() {
         return this.id.toString();
     }
+
+    public void setNewGeoLocation(String location) {
+        if (!this.geoLocation.equals(location)) {
+            this.geoLocation = location;
+        }
+    }
+    
 
     public Collection<? extends GrantedAuthority> getAuthoraties() {
         if (this.userRole == UserRole.STORE)

@@ -34,4 +34,5 @@ public class Client extends User {
         this.name = name;
         this.cpf = cpf;
     }
+
 }

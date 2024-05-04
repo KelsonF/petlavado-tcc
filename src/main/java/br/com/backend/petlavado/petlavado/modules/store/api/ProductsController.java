@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/")
@@ -21,20 +21,28 @@ public class ProductsController {
         this.productService = productService;
     }
     @GetMapping("products")
-    public ResponseEntity<List<Product>> listAllProducts(){
-        List<Product> productList = productService.listAllProducts();
+    public ResponseEntity<Collection<Product>> listAllProducts(){
+        Collection<Product> productList = productService.listAllProducts();
         return ResponseEntity.ok(productList);
+
+    }
+
+    @GetMapping("products/location")
+    public ResponseEntity<Collection<Product>> listProductsByLocation(@RequestParam String location){
+        Collection<Product> products = productService.listAllProductsByLocation(location);
+
+        return ResponseEntity.ok(products);
     }
 
     @GetMapping("products/search")
-    public ResponseEntity<List<Product>> listAllProductsByTerm(@RequestParam String searchTerm){
-        List<Product> productList = productService.getProductBySearchTerm(searchTerm);
+    public ResponseEntity<Collection<Product>> listAllProductsByTerm(@RequestParam String searchTerm){
+        Collection<Product> productList = productService.getProductBySearchTerm(searchTerm);
         return ResponseEntity.ok(productList);
     }
 
     @GetMapping("/{storeId}/products")
-    public ResponseEntity<List<Product>> listAllProductsByStore(@PathVariable Integer storeId){
-        List<Product> productList = productService.listProductsByStore(storeId);
+    public ResponseEntity<Collection<Product>> listAllProductsByStore(@PathVariable Integer storeId){
+        Collection<Product> productList = productService.listProductsByStore(storeId);
         return ResponseEntity.ok(productList);
     }
 

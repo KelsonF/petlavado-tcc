@@ -5,12 +5,15 @@ import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Product;
 import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import br.com.backend.petlavado.petlavado.modules.store.domain.repositories.ProductRepository;
 
+import br.com.backend.petlavado.petlavado.modules.store.utils.HaversineFormula;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,16 +30,33 @@ public class ProductService {
         this.storeService = storeService;
     }
 
-    public List<Product> listAllProducts(){
+    public Collection<Product> listAllProducts(){
         return productRepository.findAll();
     }
 
-    public List<Product> listProductsByStore(Integer storeId){
+    public Collection<Product> listAllProductsByLocation(String geolocation){
+        double maxDistance = 1000;
+        HaversineFormula formula = new HaversineFormula();
+        Collection<Product> products = listAllProducts();
+        Collection<Product> filteredProducts = new ArrayList<>();
+
+        for (Product product : products) {
+            double distance = formula.calculateDistance(geolocation, product.getStore().getGeoLocation());
+
+            if (distance <= maxDistance) {
+                filteredProducts.add(product);
+            }
+        }
+
+        return filteredProducts;
+    }
+
+    public Collection<Product> listProductsByStore(Integer storeId){
         Store store = storeService.getStoreById(storeId);
         return productRepository.findProductByStore(store);
     }
 
-    public List<Product> getProductBySearchTerm(String searchTerm){
+    public Collection<Product> getProductBySearchTerm(String searchTerm){
         Assert.hasText(searchTerm, "Search term cannot be empty");
 
         return productRepository.findProductByDescriptionContainingIgnoreCaseOrderByStore(searchTerm);

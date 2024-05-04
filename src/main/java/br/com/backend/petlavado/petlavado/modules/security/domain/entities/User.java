@@ -24,6 +24,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
+    @NotBlank(message = "The name cannot be empty")
+    @NotNull
+    private String name;
+
     @NotBlank(message = "The email cannot be empty")
     @NotNull
     private String email;
@@ -42,7 +46,8 @@ public class User {
     @NotNull
     private String geoLocation;
 
-    public User(String email, String password, String phoneNumber, UserRole userRole) {
+    public User(String name,String email, String password, String phoneNumber, UserRole userRole) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;

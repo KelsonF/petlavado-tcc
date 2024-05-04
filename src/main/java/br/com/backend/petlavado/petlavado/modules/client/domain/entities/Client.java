@@ -12,9 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Client extends User {
-    @NotBlank(message = "The name cannot be empty")
-    @NotNull
-    public String name;
 
     @NotBlank(message = "The cpf cannot be empty")
     @NotNull
@@ -30,8 +27,7 @@ public class Client extends User {
         String cpf, 
         UserRole userRole
     ) {
-        super(email, password, phoneNumber, userRole);
-        this.name = name;
+        super(name,email,password,phoneNumber,userRole);
         this.cpf = cpf;
     }
 

@@ -32,18 +32,19 @@ public class AuthController {
 
   @PostMapping("login")
   public ResponseEntity<String> login(@RequestBody @Valid UserDto userDto) {
-    if (userRepository.findbyEmail(userDto.getEmail()) != null) {
+    if (userRepository.findbyEmail(userDto.email()) != null) {
       return ResponseEntity.badRequest().body("Email ja utilizado");
     }
 
-    var encryptedPassword = new BCryptPasswordEncoder().encode(userDto.getPassword());
+    var encryptedPassword = new BCryptPasswordEncoder().encode(userDto.password());
 
-    UserRole role = userDto.getIsAdmin() ? UserRole.STORE : UserRole.CLIENT;
+    UserRole role = userDto.isAdmin() ? UserRole.STORE : UserRole.CLIENT;
     var newUser = new User(
-      userDto.getEmail(),
-      encryptedPassword,
-      userDto.getPhoneNumber(),
-      role
+            userDto.name(),
+            userDto.email(),
+            encryptedPassword,
+            userDto.phoneNumber(),
+            role
     );
 
     User savedUser = userRepository.save(newUser);

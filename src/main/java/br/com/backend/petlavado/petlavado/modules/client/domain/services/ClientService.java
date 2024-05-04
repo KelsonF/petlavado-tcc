@@ -4,7 +4,6 @@ import br.com.backend.petlavado.petlavado.modules.client.domain.dtos.ClientDto;
 import br.com.backend.petlavado.petlavado.modules.client.domain.entities.Client;
 import br.com.backend.petlavado.petlavado.modules.client.domain.repositories.ClientRepository;
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserRole;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import java.util.Collection;
 public class ClientService {
     private final ClientRepository clientRepository;
 
-    @Autowired
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }

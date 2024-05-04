@@ -1,7 +1,7 @@
 package br.com.backend.petlavado.petlavado.modules.store.utils;
 
 public class HaversineFormula {
-    double calculateDistance(String userGeolocation, String offerGeolocation){
+    public double calculateDistance(String userGeolocation, String offerGeolocation){
         final double earthRadius = 6378137;
 
         // Helper function to convert degrees to radians
@@ -10,7 +10,7 @@ public class HaversineFormula {
         // Splitting coordinates into latitude and longitude components
         String[] point1 = userGeolocation.split(",");
         String[] point2 = offerGeolocation.split(",");
-        
+
         // Converting latitude and longitude components to radians
         double lat1 = Double.parseDouble(point1[0]) * rad;
         double lon1 = Double.parseDouble(point1[1]) * rad;

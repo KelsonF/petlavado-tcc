@@ -1,11 +1,13 @@
 package br.com.backend.petlavado.petlavado.modules.security.domain.dtos;
 
-import lombok.Getter;
-
-@Getter
-public class UserDto {
-    private String email;
-    private String password;
-    private String phoneNumber;
-    private Boolean isAdmin = false;
+public record UserDto(
+        String name,
+        String email,
+        String password,
+        String phoneNumber,
+        Boolean isAdmin
+){
+    public UserDto(String name, String email, String password, String phoneNumber){
+        this(name, email, password, phoneNumber, false);
+    }
 }

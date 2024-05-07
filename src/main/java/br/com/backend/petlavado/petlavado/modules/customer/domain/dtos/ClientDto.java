@@ -1,4 +1,4 @@
-package br.com.backend.petlavado.petlavado.modules.client.domain.dtos;
+package br.com.backend.petlavado.petlavado.modules.customer.domain.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

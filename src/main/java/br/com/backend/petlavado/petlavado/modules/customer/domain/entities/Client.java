@@ -1,4 +1,4 @@
-package br.com.backend.petlavado.petlavado.modules.client.domain.entities;
+package br.com.backend.petlavado.petlavado.modules.customer.domain.entities;
 
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.User;
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserRole;
@@ -12,19 +12,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Client extends User {
-    @NotBlank(message = "The name cannot be empty")
-    @NotNull
-    public String name;
-
     @NotBlank(message = "The cpf cannot be empty")
     @NotNull
     private String cpf;
 
     protected Client() {}
 
-    public Client(String name, String email, String password, String phoneNumber, String cpf, UserRole userRole) {
-        super(email, password, phoneNumber, userRole);
-        this.name = name;
+    public Client(String name, String email, String password, String phoneNumber, String cpf) {
+        super(name,email, password, phoneNumber, UserRole.CUSTOMER);
         this.cpf = cpf;
     }
 }

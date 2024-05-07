@@ -1,15 +1,13 @@
-package br.com.backend.petlavado.petlavado.modules.client.domain.services;
+package br.com.backend.petlavado.petlavado.modules.customer.domain.services;
 
-import br.com.backend.petlavado.petlavado.modules.client.domain.dtos.ClientDto;
-import br.com.backend.petlavado.petlavado.modules.client.domain.entities.Client;
-import br.com.backend.petlavado.petlavado.modules.client.domain.repositories.ClientRepository;
-import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserRole;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.dtos.ClientDto;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.entities.Client;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.Collection;
-import java.util.UUID;
 
 @Service
 public class ClientService {
@@ -24,7 +22,7 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public Client findById(UUID id) {
+    public Client findById(Integer id) {
         return clientRepository.findById(id).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found")
         );
@@ -41,13 +39,12 @@ public class ClientService {
                         data.getEmail(),
                         data.getPassword(),
                         data.getPhoneNumber(),
-                        data.getCpf(),
-                        UserRole.CLIENT
+                        data.getCpf()
                 )
         );
     }
 
-    public void deleteClient(UUID id) {
+    public void deleteClient(Integer id) {
         Client client = findById(id);
 
         clientRepository.delete(client);

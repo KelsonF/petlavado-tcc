@@ -20,11 +20,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class Store extends User {
-
-    @NotBlank(message = "The name cannot be empty")
-    @NotNull
-    public String storeName;
-
     @NotBlank(message = "The cnpj cannot be empty")
     @NotNull
     private String cnpj;
@@ -32,9 +27,14 @@ public class Store extends User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Product> products = Collections.emptyList();
 
-    public Store(String storeName, String email, String password, String phoneNumber, String cnpj, UserRole userRole) {
-        super(email,password,phoneNumber, userRole);
-        this.storeName = storeName;
+    public Store(
+            String name,
+            String email,
+            String password,
+            String phoneNumber,
+            String cnpj
+    ) {
+        super(name,email,password,phoneNumber, UserRole.STORE);
         this.cnpj = cnpj;
     }
 }

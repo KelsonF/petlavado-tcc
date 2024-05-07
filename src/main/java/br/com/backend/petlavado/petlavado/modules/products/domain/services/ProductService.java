@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -34,7 +33,7 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public List<Product> listProductsByStore(UUID storeId){
+    public List<Product> listProductsByStore(Integer storeId){
         Store store = storeService.getStoreById(storeId);
         return productRepository.findProductByStore(store);
     }
@@ -45,7 +44,7 @@ public class ProductService {
         return productRepository.findProductByDescriptionContainingIgnoreCaseOrderByStore(searchTerm);
     }
 
-    public Product createProduct(UUID storeId, ProductDto data){
+    public Product createProduct(Integer storeId, ProductDto data){
         Store store = storeService.getStoreById(storeId);
 
         return productRepository.save(
@@ -58,7 +57,7 @@ public class ProductService {
         );
     }
 
-    public Product updateProduct(UUID storeId, UUID productId, ProductDto data){
+    public Product updateProduct(Integer storeId, Integer productId, ProductDto data){
         storeService.getStoreById(storeId);
 
         Product existingProduct = getProductOrNull(productId)
@@ -76,7 +75,7 @@ public class ProductService {
         return productRepository.save(existingProduct);
     }
 
-    public void deleteProduct(UUID storeId, UUID productId){
+    public void deleteProduct(Integer storeId, Integer productId){
 
         storeService.getStoreById(storeId);
 
@@ -87,7 +86,7 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    public Optional<Product> getProductOrNull(UUID productId){
+    public Optional<Product> getProductOrNull(Integer productId){
         return productRepository.findById(productId);
     }
 }

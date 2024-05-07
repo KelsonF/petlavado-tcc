@@ -1,14 +1,13 @@
-package br.com.backend.petlavado.petlavado.modules.client.api;
+package br.com.backend.petlavado.petlavado.modules.customer.api;
 
-import br.com.backend.petlavado.petlavado.modules.client.domain.dtos.ClientDto;
-import br.com.backend.petlavado.petlavado.modules.client.domain.entities.Client;
-import br.com.backend.petlavado.petlavado.modules.client.domain.services.ClientService;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.dtos.ClientDto;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.entities.Client;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.services.ClientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/clients")
@@ -35,7 +34,7 @@ public class ClientsController {
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<Client> deleteClient(@PathVariable UUID id) {
+    ResponseEntity<Client> deleteClient(@PathVariable Integer id) {
         clientService.deleteClient(id);
 
         return ResponseEntity.noContent().build();

@@ -1,6 +1,5 @@
 package br.com.backend.petlavado.petlavado.modules.store.domain.services;
 
-import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserRole;
 import br.com.backend.petlavado.petlavado.modules.store.domain.dtos.StoreDto;
 import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import br.com.backend.petlavado.petlavado.modules.store.domain.repositories.StoreRepository;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
-import java.util.UUID;
 
 @Service
 public class StoreService {
@@ -36,19 +34,18 @@ public class StoreService {
                         storeDto.getEmail(),
                         storeDto.getPassword(),
                         storeDto.getPhoneNumber(),
-                        storeDto.getCnpj(),
-                        UserRole.STORE
+                        storeDto.getCnpj()
                 )
         );
     }
 
-    public void deleteStore(UUID storeId) {
+    public void deleteStore(Integer storeId) {
         Store store = getStoreById(storeId);
 
         storeRepository.delete(store);
     }
 
-    public Store getStoreById(UUID storeId) {
+    public Store getStoreById(Integer storeId) {
         return storeRepository.findById(storeId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Client not found")
         );

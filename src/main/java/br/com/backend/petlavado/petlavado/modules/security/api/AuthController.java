@@ -1,63 +1,60 @@
 package br.com.backend.petlavado.petlavado.modules.security.api;
 
-import java.net.URI;
-
+import br.com.backend.petlavado.petlavado.modules.security.domain.dtos.CreateUserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.backend.petlavado.petlavado.modules.security.domain.dtos.UserDto;
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.User;
-import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserRole;
 import br.com.backend.petlavado.petlavado.modules.security.domain.repositories.UserRepository;
-import br.com.backend.petlavado.petlavado.modules.security.domain.services.AuthService;
+import br.com.backend.petlavado.petlavado.modules.security.domain.services.TokenService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-  private final AuthService authService;
   private final UserRepository userRepository;
-
-  public AuthController(AuthService authService, UserRepository userRepository) {
-    this.authService = authService;
-    this.userRepository = userRepository;
-  }
+  private final PasswordEncoder passwordEncoder;
+  private final TokenService tokenService;
 
   @PostMapping("login")
-  public ResponseEntity<String> login(@RequestBody @Valid UserDto userDto) {
-    if (userRepository.findbyEmail(userDto.email()) != null) {
+  public ResponseEntity<String> login(@RequestBody @Valid UserDto data) {
+    User user = userRepository.loadUserByEmaill(data.email());
+
+    if (passwordEncoder.matches(user.getPassword(), data.password())) {
+      String token = tokenService.generateToken(user);
+      return ResponseEntity.ok(token);
+    }
+
+    return ResponseEntity.badRequest().build();
+  }
+
+  @PostMapping("register")
+  public ResponseEntity<String> register(@RequestBody @Valid CreateUserDto data) {
+    if (userRepository.loadUserByEmaill(data.email()) != null) {
       return ResponseEntity.badRequest().body("Email ja utilizado");
     }
 
-    var encryptedPassword = new BCryptPasswordEncoder().encode(userDto.password());
+    var encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 
-    UserRole role = userDto.isAdmin() ? UserRole.STORE : UserRole.CLIENT;
     var newUser = new User(
-            userDto.name(),
-            userDto.email(),
-            encryptedPassword,
-            userDto.phoneNumber(),
-            role
-    );
+        data.name(),
+        data.email(),
+        encryptedPassword,
+        data.phoneNumber(),
+        data.role());
 
-    User savedUser = userRepository.save(newUser);
-    URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-      .path("/{id}")
-      .buildAndExpand(savedUser.getId())
-      .toUri();
+    userRepository.save(newUser);
+    String token = tokenService.generateToken(newUser);
     
-    return ResponseEntity.created(location).build();
-  }
-
-  @GetMapping
-  public String getTolkien() {
-    return authService.authenticated();
+    return ResponseEntity.ok(token);
   }
 }

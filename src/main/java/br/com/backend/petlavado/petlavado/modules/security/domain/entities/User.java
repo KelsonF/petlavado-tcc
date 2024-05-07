@@ -1,5 +1,6 @@
 package br.com.backend.petlavado.petlavado.modules.security.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,11 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
@@ -19,7 +22,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
@@ -43,33 +46,58 @@ public class User {
     @NotNull
     private UserRole userRole;
 
-    @NotNull
-    private String geoLocation;
-
     public User(String name,String email, String password, String phoneNumber, UserRole userRole) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.userRole = userRole;
-        this.geoLocation = "";
     }
 
-    public String getIdString() {
-        return this.id.toString();
-    }
+    @Transient
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
 
-    public void setNewGeoLocation(String location) {
-        if (!this.geoLocation.equals(location)) {
-            this.geoLocation = location;
+        switch (userRole){
+            case STORE -> {
+                authorities.add(new SimpleGrantedAuthority("ROLE_STORE"));
+            }
+            case CLIENT -> {
+                authorities.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
+            }
         }
-    }
-    
 
-    public Collection<? extends GrantedAuthority> getAuthoraties() {
-        if (this.userRole == UserRole.STORE)
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ROLE_ADMIN"));
-        else
-            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return authorities;
+    }
+
+    @Transient
+    @JsonIgnore
+    public String getUsername() {
+        return this.email;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

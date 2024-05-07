@@ -60,12 +60,8 @@ public class User implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         switch (userRole){
-            case STORE -> {
-                authorities.add(new SimpleGrantedAuthority("ROLE_STORE"));
-            }
-            case CLIENT -> {
-                authorities.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
-            }
+            case STORE -> authorities.add(new SimpleGrantedAuthority("ROLE_STORE"));
+            case CLIENT -> authorities.add(new SimpleGrantedAuthority("ROLE_CLIENT"));
         }
 
         return authorities;

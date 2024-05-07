@@ -14,7 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,9 +66,9 @@ public class ProductService {
 
         return productRepository.save(
                 new Product(
-                        data.getDescription(),
-                        data.getValue(),
-                        data.getImageUrl(),
+                        data.description(),
+                        data.value(),
+                        data.imageUrl(),
                         store
                 )
         );

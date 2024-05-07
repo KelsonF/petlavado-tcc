@@ -20,6 +20,7 @@ public class ProductsController {
     ){
         this.productService = productService;
     }
+
     @GetMapping("products")
     public ResponseEntity<Collection<Product>> listAllProducts(){
         Collection<Product> productList = productService.listAllProducts();

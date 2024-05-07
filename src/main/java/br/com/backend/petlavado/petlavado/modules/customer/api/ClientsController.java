@@ -1,8 +1,8 @@
-package br.com.backend.petlavado.petlavado.modules.client.api;
+package br.com.backend.petlavado.petlavado.modules.customer.api;
 
-import br.com.backend.petlavado.petlavado.modules.client.domain.dtos.ClientDto;
-import br.com.backend.petlavado.petlavado.modules.client.domain.entities.Client;
-import br.com.backend.petlavado.petlavado.modules.client.domain.services.ClientService;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.dtos.ClientDto;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.entities.Client;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.services.ClientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/clients")
 public class ClientsController {
-    ClientService clientService;
+    private final ClientService clientService;
 
     public ClientsController(ClientService clientService) {
         this.clientService = clientService;

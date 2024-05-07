@@ -8,7 +8,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Collections;
@@ -17,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
 public class Store extends User {
 
     @NotBlank(message = "The cnpj cannot be empty")
@@ -26,6 +24,11 @@ public class Store extends User {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Product> products;
+
+    @NotNull
+    private String geoLocation;
+
+    protected Store() {}
 
     public Store(
         String storeName, 
@@ -38,5 +41,6 @@ public class Store extends User {
         super(storeName,email,password,phoneNumber, userRole);
         this.cnpj = cnpj;
         this.products = Collections.emptyList();
+        this.geoLocation = "";
     }
 }

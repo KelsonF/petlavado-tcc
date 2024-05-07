@@ -7,8 +7,8 @@ import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @Entity
 public class Product {
     @Id
@@ -35,4 +35,5 @@ public class Product {
         this.imageUrl = imageUrl;
         this.store = store;
     }
+
 }

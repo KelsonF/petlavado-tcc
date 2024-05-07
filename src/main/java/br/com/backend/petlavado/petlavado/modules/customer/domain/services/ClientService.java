@@ -1,8 +1,8 @@
-package br.com.backend.petlavado.petlavado.modules.client.domain.services;
+package br.com.backend.petlavado.petlavado.modules.customer.domain.services;
 
-import br.com.backend.petlavado.petlavado.modules.client.domain.dtos.ClientDto;
-import br.com.backend.petlavado.petlavado.modules.client.domain.entities.Client;
-import br.com.backend.petlavado.petlavado.modules.client.domain.repositories.ClientRepository;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.dtos.ClientDto;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.entities.Client;
+import br.com.backend.petlavado.petlavado.modules.customer.domain.repositories.ClientRepository;
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.UserRole;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

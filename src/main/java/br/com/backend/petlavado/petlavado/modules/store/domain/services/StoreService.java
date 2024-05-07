@@ -24,19 +24,19 @@ public class StoreService {
     }
 
     public Store createStore(StoreDto data) {
-        if (storeRepository.findByEmail(data.getEmail()) != null) {
+        if (storeRepository.findByEmail(data.email()) != null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Email already in use");
         }
 
-        var encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
+        var encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
 
         return storeRepository.save(
                 new Store(
-                    data.getStoreName(),
-                    data.getEmail(),
+                    data.storeName(),
+                    data.email(),
                     encryptedPassword,
-                    data.getPhoneNumber(),
-                    data.getCnpj(),
+                    data.phoneNumber(),
+                    data.cnpj(),
                     UserRole.STORE
                 )
         );

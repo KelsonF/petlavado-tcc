@@ -12,7 +12,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/stores")
 public class StoreController {
-    StoreService storeService;
+    private final StoreService storeService;
 
     public StoreController(StoreService storeService) {
         this.storeService = storeService;

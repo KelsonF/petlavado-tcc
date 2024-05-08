@@ -49,9 +49,9 @@ public class ProductService {
 
         return productRepository.save(
                 new Product(
-                        data.getDescription(),
-                        data.getValue(),
-                        data.getImageUrl(),
+                        data.description(),
+                        data.value(),
+                        data.imageUrl(),
                         store
                 )
         );

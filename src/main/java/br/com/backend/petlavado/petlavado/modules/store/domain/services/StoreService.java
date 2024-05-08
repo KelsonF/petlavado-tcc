@@ -3,7 +3,6 @@ package br.com.backend.petlavado.petlavado.modules.store.domain.services;
 import br.com.backend.petlavado.petlavado.modules.store.domain.dtos.StoreDto;
 import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import br.com.backend.petlavado.petlavado.modules.store.domain.repositories.StoreRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,7 +13,6 @@ import java.util.Collection;
 public class StoreService {
     private final StoreRepository storeRepository;
 
-    @Autowired
     public StoreService(StoreRepository storeRepository) {
         this.storeRepository = storeRepository;
     }
@@ -24,17 +22,17 @@ public class StoreService {
     }
 
     public Store createStore(StoreDto storeDto) {
-        if (storeRepository.findByEmail(storeDto.getEmail()) != null) {
+        if (storeRepository.findByEmail(storeDto.email()) != null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Email already in use");
         }
 
         return storeRepository.save(
                 new Store(
-                        storeDto.getStoreName(),
-                        storeDto.getEmail(),
-                        storeDto.getPassword(),
-                        storeDto.getPhoneNumber(),
-                        storeDto.getCnpj()
+                        storeDto.storeName(),
+                        storeDto.email(),
+                        storeDto.password(),
+                        storeDto.phoneNumber(),
+                        storeDto.cnpj()
                 )
         );
     }

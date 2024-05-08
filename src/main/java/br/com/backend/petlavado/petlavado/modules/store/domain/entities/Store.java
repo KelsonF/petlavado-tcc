@@ -25,7 +25,7 @@ public class Store extends User {
     private String cnpj;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Product> products = Collections.emptyList();
+    private List<Product> products;
 
     public Store(
             String name,
@@ -36,5 +36,6 @@ public class Store extends User {
     ) {
         super(name,email,password,phoneNumber, UserRole.STORE);
         this.cnpj = cnpj;
+        this.products = Collections.emptyList();
     }
 }

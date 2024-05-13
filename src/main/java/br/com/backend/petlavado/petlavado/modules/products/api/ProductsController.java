@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/")
@@ -21,19 +20,26 @@ public class ProductsController {
         this.productService = productService;
     }
     @GetMapping("products")
-    public ResponseEntity<List<Product>> listAllProducts(){
+    public ResponseEntity<List<Product>> listProducts(){
         List<Product> productList = productService.listAllProducts();
         return ResponseEntity.ok(productList);
     }
 
+    @GetMapping("products/location")
+    public ResponseEntity<List<Product>> listProductsByLocation(@RequestParam String location){
+        List<Product> products = productService.getProductsByLocation(location);
+
+        return ResponseEntity.ok(products);
+    }
+
     @GetMapping("products/search")
-    public ResponseEntity<List<Product>> listAllProductsByTerm(@RequestParam String searchTerm){
+    public ResponseEntity<List<Product>> listProductsByTerm(@RequestParam String searchTerm){
         List<Product> productList = productService.getProductBySearchTerm(searchTerm);
         return ResponseEntity.ok(productList);
     }
 
     @GetMapping("/{storeId}/products")
-    public ResponseEntity<List<Product>> listAllProductsByStore(@PathVariable Integer storeId){
+    public ResponseEntity<List<Product>> listProductsByStore(@PathVariable Integer storeId){
         List<Product> productList = productService.listProductsByStore(storeId);
         return ResponseEntity.ok(productList);
     }

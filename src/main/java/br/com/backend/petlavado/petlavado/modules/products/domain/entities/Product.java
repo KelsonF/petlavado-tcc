@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @Entity
@@ -21,7 +23,7 @@ public class Product {
 
     @NotNull
     @Positive
-    private Double value;
+    private BigDecimal value;
 
     private String imageUrl;
 
@@ -30,7 +32,7 @@ public class Product {
 
     protected Product() {}
 
-    public Product(String description, Double value, String imageUrl, Store store) {
+    public Product(String description, BigDecimal value, String imageUrl, Store store) {
         this.description = description;
         this.value = value;
         this.imageUrl = imageUrl;

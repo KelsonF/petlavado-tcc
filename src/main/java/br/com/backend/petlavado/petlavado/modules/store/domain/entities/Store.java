@@ -27,6 +27,8 @@ public class Store extends User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Product> products;
 
+    private String geolocation;
+
     public Store(
             String name,
             String email,
@@ -37,5 +39,6 @@ public class Store extends User {
         super(name,email,password,phoneNumber, UserRole.STORE);
         this.cnpj = cnpj;
         this.products = Collections.emptyList();
+        this.geolocation = "";
     }
 }

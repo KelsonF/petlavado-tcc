@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.math.BigDecimal;
+
 public record ProductDto (
     @NotNull
     @NotBlank(message = "O campo de descrição não pode esta vazio")
@@ -12,7 +14,7 @@ public record ProductDto (
     @NotNull
     @NotBlank(message = "O campo de valor nao pode esta vazio")
     @Positive
-    Double value,
+    BigDecimal value,
 
     @NotNull
     @NotBlank(message = "O produto precisa de uma imagem")

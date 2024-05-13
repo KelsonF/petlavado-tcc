@@ -3,6 +3,7 @@ package br.com.backend.petlavado.petlavado.modules.products.domain.services;
 import br.com.backend.petlavado.petlavado.modules.products.domain.dtos.ProductDto;
 import br.com.backend.petlavado.petlavado.modules.products.domain.entities.Product;
 import br.com.backend.petlavado.petlavado.modules.products.domain.repositories.ProductRepository;
+import br.com.backend.petlavado.petlavado.modules.products.domain.utils.HaversineFormula;
 import br.com.backend.petlavado.petlavado.modules.store.domain.entities.Store;
 import br.com.backend.petlavado.petlavado.modules.store.domain.services.StoreService;
 import org.springframework.beans.BeanUtils;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +44,23 @@ public class ProductService {
         Assert.hasText(searchTerm, "Search term cannot be empty");
 
         return productRepository.findProductByDescriptionContainingIgnoreCaseOrderByStore(searchTerm);
+    }
+
+    public List<Product> getProductsByLocation(String geolocation){
+        double maxDistance = 1000;
+        HaversineFormula formula = new HaversineFormula();
+        List<Product> products = listAllProducts();
+        List<Product> filteredProducts = new ArrayList<>();
+
+        for (Product product : products) {
+            double distance = formula.calculateDistance(geolocation, product.getStore().getGeolocation());
+
+            if (distance <= maxDistance) {
+                filteredProducts.add(product);
+            }
+        }
+
+        return filteredProducts;
     }
 
     public Product createProduct(Integer storeId, ProductDto data){

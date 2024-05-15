@@ -3,7 +3,6 @@ package br.com.backend.petlavado.petlavado.modules.customer.domain.services;
 import br.com.backend.petlavado.petlavado.modules.customer.domain.dtos.ClientDto;
 import br.com.backend.petlavado.petlavado.modules.customer.domain.entities.Client;
 import br.com.backend.petlavado.petlavado.modules.customer.domain.repositories.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,7 +12,6 @@ import java.util.Collection;
 public class ClientService {
     private final ClientRepository clientRepository;
 
-    @Autowired
     public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }

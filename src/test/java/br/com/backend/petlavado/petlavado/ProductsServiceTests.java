@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -35,8 +36,8 @@ class ProductServiceTest {
     void testListAllProducts() {
         // Mocking productRepository.findAll() to return a list of products
         when(productRepository.findAll()).thenReturn(Arrays.asList(
-                new Product("Product1", 10.0, "image1.jpg", new Store()),
-                new Product("Product2", 20.0, "image2.jpg", new Store())
+                new Product("Product1",new BigDecimal("10.0"), "image1.jpg", new Store()),
+                new Product("Product2", new BigDecimal("20.0"), "image2.jpg", new Store())
         ));
 
         // Calling the service method to list all products
@@ -55,8 +56,8 @@ class ProductServiceTest {
 
         // Mocking productRepository.findProductByStore() to return a list of products
         when(productRepository.findProductByStore(store)).thenReturn(Arrays.asList(
-                new Product("Product1", 10.0, "image1.jpg", store),
-                new Product("Product2", 20.0, "image2.jpg", store)
+                new Product("Product1", new BigDecimal("10.0"), "image1.jpg", store),
+                new Product("Product2", new BigDecimal("20.0"), "image2.jpg", store)
         ));
 
         // Calling the service method to list products by store ID
@@ -74,8 +75,8 @@ class ProductServiceTest {
         when(storeService.getStoreById(1)).thenReturn(store);
 
         // Mocking productRepository.save() to return a product
-        ProductDto productDto = new ProductDto("Product1", 10.0, "image1.jpg");
-        when(productRepository.save(any(Product.class))).thenReturn(new Product("Product1", 10.0, "image1.jpg", store));
+        ProductDto productDto = new ProductDto("Product1", new BigDecimal("10.0"), "image1.jpg");
+        when(productRepository.save(any(Product.class))).thenReturn(new Product("Product1",new BigDecimal("10.0"), "image1.jpg", store));
 
         // Calling the service method to create a product
         Product createdProduct = productService.createProduct(1, productDto);
@@ -88,7 +89,7 @@ class ProductServiceTest {
     @Test
     void testGetProductOrNull() {
         // Mocking productRepository.findById() to return a product
-        Product product = new Product("Product1", 10.0, "image1.jpg", new Store());
+        Product product = new Product("Product1", new BigDecimal("10.0"), "image1.jpg", new Store());
         when(productRepository.findById(1)).thenReturn(Optional.of(product));
 
         // Calling the service method to get a product by ID
@@ -106,7 +107,7 @@ class ProductServiceTest {
         when(storeService.getStoreById(1)).thenReturn(store);
 
         // Mocking productRepository.findById() to return a product
-        Product existingProduct = new Product("Product1", 10.0, "image1.jpg", store);
+        Product existingProduct = new Product("Product1", new BigDecimal("10.0"), "image1.jpg", store);
         when(productRepository.findById(1)).thenReturn(Optional.of(existingProduct));
 
         // Calling the service method to delete a product

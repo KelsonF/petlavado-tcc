@@ -94,6 +94,11 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.hubspot.maven.plugins</groupId>
+                <artifactId>prettier-maven-plugin</artifactId>
+                <version>0.22</version>
+            </plugin>
         </plugins>
     </build>
 

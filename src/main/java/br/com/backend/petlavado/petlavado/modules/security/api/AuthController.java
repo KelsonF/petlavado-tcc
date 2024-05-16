@@ -1,9 +1,8 @@
 package br.com.backend.petlavado.petlavado.modules.security.api;
 
+import br.com.backend.petlavado.petlavado.modules.security.domain.services.AuthService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import br.com.backend.petlavado.petlavado.modules.security.domain.services.AuthService;
 
 @RestController
 public class AuthController {

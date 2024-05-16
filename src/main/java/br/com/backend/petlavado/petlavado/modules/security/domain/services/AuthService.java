@@ -2,9 +2,8 @@ package br.com.backend.petlavado.petlavado.modules.security.domain.services;
 
 import br.com.backend.petlavado.petlavado.modules.security.domain.entities.User;
 import br.com.backend.petlavado.petlavado.modules.security.domain.repositories.UserRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.Collection;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {

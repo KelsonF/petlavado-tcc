@@ -5,37 +5,41 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Getter
 @Setter
 @Entity
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  private Integer id;
 
-    @NotEmpty
-    private String description;
+  @NotEmpty
+  private String description;
 
-    @NotNull
-    @Positive
-    private BigDecimal value;
+  @NotNull
+  @Positive
+  private BigDecimal value;
 
-    private String imageUrl;
+  private String imageUrl;
 
-    @ManyToOne
-    private Store store;
+  @ManyToOne
+  private Store store;
 
-    protected Product() {}
+  protected Product() {}
 
-    public Product(String description, BigDecimal value, String imageUrl, Store store) {
-        this.description = description;
-        this.value = value;
-        this.imageUrl = imageUrl;
-        this.store = store;
-    }
+  public Product(
+    String description,
+    BigDecimal value,
+    String imageUrl,
+    Store store
+  ) {
+    this.description = description;
+    this.value = value;
+    this.imageUrl = imageUrl;
+    this.store = store;
+  }
 }

@@ -1,0 +1,25 @@
+<div class="bg-surface-elevated rounded-lg shadow-md hover:shadow-lg transition overflow-hidden border border-border">
+  <% if product.image.attached? %>
+    <div class="aspect-square">
+      <%= image_tag product.image, class: "w-full h-full object-cover", alt: product.name %>
+    </div>
+  <% else %>
+    <div class="aspect-square bg-surface-muted flex items-center justify-center border-b border-border">
+      <span class="text-4xl text-secondary-300 font-light">IMAGEM</span>
+    </div>
+  <% end %>
+  
+  <div class="p-4">
+    <h3 class="text-lg font-semibold text-fg mb-2 line-clamp-2 font-heading"><%= product.name %></h3>
+    <p class="text-sm text-fg-muted mb-3 leading-relaxed line-clamp-3"><%= truncate(product.description, length: 100) %></p>
+    
+    <div class="mb-3">
+      <span class="text-xs text-fg-soft">Loja: <%= link_to product.store.name, product.store, class: "text-accent-300 hover:underline font-medium" %></span>
+    </div>
+    
+    <div class="flex justify-between items-center">
+      <span class="text-xl font-bold text-primary-300">R$ <%= number_with_precision(product.price, precision: 2) %></span>
+      <%= link_to "Ver", [product.store, product], data: { turbo: false }, class: "px-4 py-2 rounded font-semibold bg-accent-400 text-white hover:bg-primary-400 transition text-sm" %>
+    </div>
+  </div>
+</div>

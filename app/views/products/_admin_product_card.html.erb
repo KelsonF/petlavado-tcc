@@ -1,0 +1,27 @@
+<div class="bg-white rounded-lg shadow-md hover:shadow-lg transition overflow-hidden">
+  <% if product.image.attached? %>
+    <div class="aspect-square">
+      <%= image_tag product.image, class: "w-full h-full object-cover", alt: product.name %>
+    </div>
+  <% else %>
+    <div class="aspect-square bg-background flex items-center justify-center border-b">
+      <span class="text-4xl text-secondary font-light">IMAGEM</span>
+    </div>
+  <% end %>
+  
+  <div class="p-4">
+    <h3 class="text-lg font-semibold text-text mb-2 line-clamp-2"><%= product.name %></h3>
+    <p class="text-sm text-secondary mb-3 leading-relaxed line-clamp-3"><%= truncate(product.description, length: 100) %></p>
+    
+    <div class="mb-3">
+      <span class="text-xl font-bold text-primary">R$ <%= number_with_precision(product.price, precision: 2) %></span>
+    </div>
+    
+    <div class="flex gap-2">
+      <%= link_to "Ver", [store, product], class: "flex-1 text-center px-3 py-2 rounded font-semibold bg-accent text-white hover:bg-primary transition text-sm" %>
+      <% if store.owner == current_user %>
+        <%= link_to "Editar", edit_store_product_path(store, product), class: "flex-1 text-center px-3 py-2 rounded font-semibold bg-secondary text-white hover:bg-primary transition text-sm" %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="h-full flex items-center justify-center bg-surface p-6">
+  <div class="w-full max-w-md bg-surface-elevated rounded-2xl shadow-xl p-10 border border-border">
+    <div class="mb-8 text-center">
+      <div class="flex justify-center mb-4">
+        <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-400 shadow-lg">
+          <span class="text-4xl text-white">🐾</span>
+        </span>
+      </div>
+      <h2 class="text-3xl font-bold text-fg font-heading mb-2">Bem-vindo!</h2>
+      <p class="text-fg-muted text-base">Crie sua conta para acessar o melhor do mundo pet.</p>
+    </div>
+    <%= form_for resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-4" } do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+      <div>
+        <%= render Input::Component.new(
+              form: f,
+              label: "E-mail",
+              name: :email,
+              type: "email",
+              required: true,
+              placeholder: "Digite seu e-mail",
+            ) %>
+      </div>
+      <div>
+        <%= render Input::Component.new(
+              form: f,
+              label: "Senha",
+              name: :password,
+              type: "password",
+              required: true,
+              placeholder: "Mínimo 6 caracteres",
+            ) %>
+      </div>
+      <div>
+        <%= render Input::Component.new(
+              form: f,
+              label: "Confirmar Senha",
+              name: :password_confirmation,
+              type: "password",
+              required: true,
+              placeholder: "Confirme sua senha",
+            ) %>
+      </div>
+      <div>
+        <%= render Select::Component.new(
+              form: f,
+              name: :user_type,
+              label: "Tipo de Usuário",
+              options: User.user_types.keys.map { |type| [type.humanize, type] },
+              required: true,
+              placeholder: "Selecione seu tipo de usuário",
+            ) %>
+      </div>
+      <div>
+        <%= render Button::Component.new(label: "Criar Conta", url: registration_path(resource_name), method: :post) %>
+      </div>
+    <% end %>
+    <div class="mt-6 text-center text-fg-soft">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

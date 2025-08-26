@@ -1,0 +1,14 @@
+<% if @reaction.errors.any? %>
+  <%= turbo_stream.replace "reactions_#{@product.id}" do %>
+    <div class="text-danger-400 font-bold">
+      <%= @reaction.errors.full_messages.to_sentence %>
+    </div>
+    <span class="ml-2 text-fg-soft">Curtidas: <%= @product.reactions.like.count %></span>
+    <span class="ml-2 text-fg-soft">Não Curtidas: <%= @product.reactions.dislike.count %></span>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace "reactions_#{@product.id}" do %>
+    <span class="ml-2 text-fg-soft">Curtidas: <%= @product.reactions.like.count %></span>
+    <span class="ml-2 text-fg-soft">Não Curtidas: <%= @product.reactions.dislike.count %></span>
+  <% end %>
+<% end %>

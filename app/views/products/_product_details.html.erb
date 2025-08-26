@@ -1,0 +1,54 @@
+<div class="bg-surface-elevated rounded-lg shadow-md p-8 border border-border">
+  <div class="flex justify-between items-start mb-6">
+    <h1 class="text-3xl font-bold text-fg font-heading"><%= product.name %></h1>
+    <span class="text-3xl font-bold text-primary-300">R$ <%= number_with_precision(product.price, precision: 2) %></span>
+  </div>
+  
+  <% if product.image.attached? %>
+    <div class="mb-6">
+      <%= image_tag product.image, class: "w-full mx-auto rounded-lg shadow-md object-fit", alt: product.name %>
+    </div>
+  <% end %>
+  
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold text-fg mb-2 font-heading">Descrição</h3>
+    <p class="text-fg-muted leading-relaxed"><%= simple_format(product.description) %></p>
+  </div>
+  
+  <div class="mb-6">
+    <span class="text-sm text-fg-soft">Loja: <%= link_to store.name, store, class: "text-accent-300 hover:underline font-semibold" %></span>
+  </div>
+  
+  <% if store.owner == current_user %>
+    <div class="flex gap-4 mb-6">
+      <%= link_to "Editar", edit_store_product_path(store, product), class: "px-6 py-3 rounded font-semibold bg-primary-400 text-white hover:bg-secondary-400 transition" %>
+      <%= link_to "Excluir", [store, product], method: :delete, 
+          data: { confirm: "Tem certeza que deseja excluir este produto?" }, 
+          class: "px-6 py-3 rounded font-semibold bg-danger-400 text-white hover:bg-danger-300 transition" %>
+    </div>
+  <% end %>
+  
+  <div class="flex flex-col items-center mt-10">
+    <% if user_signed_in? && current_user != store.owner %>
+      <% chat = Chat.find_by(user: current_user, store: store) %>
+      <% if chat %>
+        <%= link_to "Abrir Chat com a Loja", chat_path(chat), class: "bg-primary-400 text-white font-bold py-2 px-6 rounded hover:bg-secondary-400 transition mb-2" %>
+      <% else %>
+        <%= button_to "Iniciar conversa", chats_path(chat: { store_id: store.id }), method: :post, class: "bg-primary-400 text-white font-bold py-2 px-6 rounded hover:bg-secondary-400 transition mb-2" %>
+      <% end %>
+    <% end %>
+    <%= link_to "← Voltar para Produtos", products_path, class: "text-accent-300 hover:underline mt-4" %>
+  </div>
+
+  <!-- Reaction System -->
+  <div class="flex items-center gap-4 mt-8">
+    <% if user_signed_in? %>
+      <%= button_to "👍 Curtir", product_reactions_path(product, reaction_type: :like), method: :post, form: { data: { turbo_frame: "reactions_#{product.id}" } }, class: "px-3 py-2 rounded bg-primary-400 text-white font-bold" %>
+      <%= button_to "👎 Não Curtir", product_reactions_path(product, reaction_type: :dislike), method: :post, form: { data: { turbo_frame: "reactions_#{product.id}" } }, class: "px-3 py-2 rounded bg-danger-400 text-white font-bold" %>
+    <% end %>
+    <%= turbo_frame_tag "reactions_#{product.id}" do %>
+      <span class="ml-2 text-fg-soft">Curtidas: <%= product.reactions.like.count %></span>
+      <span class="ml-2 text-fg-soft">Não Curtidas: <%= product.reactions.dislike.count %></span>
+    <% end %>
+  </div>
+</div>

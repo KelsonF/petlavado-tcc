@@ -1,0 +1,47 @@
+<div class="h-full flex items-center justify-center bg-surface p-6">
+  <div class="w-full max-w-md bg-surface-elevated rounded-2xl shadow-xl p-10 border border-border">
+    <div class="mb-8 text-center">
+      <div class="flex justify-center mb-4">
+        <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-400 shadow-lg">
+          <span class="text-4xl text-white">🔑</span>
+        </span>
+      </div>
+      <h2 class="text-3xl font-bold text-fg font-heading mb-2">Bem-vindo de volta!</h2>
+      <p class="text-fg-muted text-base">Faça login para acessar sua conta e aproveitar o mundo pet.</p>
+    </div>
+    <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-4" } do |f| %>
+      <div>
+        <%= render Input::Component.new(
+              form: f,
+              label: "E-mail",
+              name: :email,
+              type: "email",
+              required: true,
+              placeholder: "Digite seu e-mail",
+            ) %>
+      </div>
+      <div>
+        <%= render Input::Component.new(
+              form: f,
+              label: "Senha",
+              name: :password,
+              type: "password",
+              required: true,
+              placeholder: "Digite sua senha",
+            ) %>
+      </div>
+      <% if devise_mapping.rememberable? %>
+        <div class="mb-4 flex items-center">
+          <%= f.check_box :remember_me, class: "mr-2 leading-tight" %>
+          <%= f.label :remember_me, "Lembrar de mim", class: "text-fg font-semibold" %>
+        </div>
+      <% end %>
+      <div>
+        <%= f.submit "Entrar", class: "w-full bg-primary-400 text-white font-bold py-2 px-4 rounded-lg hover:bg-secondary-400 transition" %>
+      </div>
+    <% end %>
+    <div class="mt-6 text-center text-fg-soft">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

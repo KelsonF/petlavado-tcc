@@ -1,0 +1,172 @@
+<div class="bg-surface">
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-primary-800 to-primary-600 text-white overflow-hidden">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="relative max-w-7xl mx-auto px-4 py-20 lg:py-32">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-6xl font-bold font-heading mb-6">
+          A Plataforma do
+          <span class="text-primary-200">Mundo Pet</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-primary-100 mb-8 max-w-3xl mx-auto">
+          Conectamos donos de pets com as melhores lojas especializadas. 
+          Encontre produtos, converse com os lojistas e negocie diretamente com quem entende do assunto.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <% if user_signed_in? %>
+            <%= link_to "Explorar Produtos", products_path,
+                        class: "bg-secondary-400 hover:bg-secondary-300 text-white font-bold py-4 px-8 rounded-lg text-lg transition transform hover:scale-105" %>
+          <% else %>
+            <%= link_to "Começar Agora", new_user_registration_path,
+                        class: "bg-secondary-400 hover:bg-secondary-300 text-white font-bold py-4 px-8 rounded-lg text-lg transition transform hover:scale-105" %>
+            <%= link_to "Criar Loja", new_user_registration_path,
+                        class: "bg-transparent border-2 border-white hover:bg-white hover:text-primary-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-16 bg-surface-elevated">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl font-bold text-primary-300 mb-2"><%= @total_products %>+</div>
+          <div class="text-fg-muted">Produtos</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-primary-300 mb-2"><%= @total_stores %>+</div>
+          <div class="text-fg-muted">Lojas</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-primary-300 mb-2">100%</div>
+          <div class="text-fg-muted">Conexões</div>
+        </div>
+        <div>
+          <div class="text-4xl font-bold text-primary-300 mb-2">24h</div>
+          <div class="text-fg-muted">Suporte</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-20 bg-surface">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-5xl font-bold text-fg font-heading mb-4">
+          Por que escolher o <span class="text-primary-300">Petlavado</span>?
+        </h2>
+        <p class="text-xl text-fg-muted max-w-2xl mx-auto">
+          Uma plataforma que facilita a conexão entre donos de pets e lojistas especializados
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center bg-surface-elevated p-8 rounded-2xl border border-border">
+          <div class="w-16 h-16 bg-primary-400 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="text-3xl">🔍</span>
+          </div>
+          <h3 class="text-xl font-bold text-fg mb-4 font-heading">Descubra Produtos</h3>
+          <p class="text-fg-muted">Explore milhares de produtos para seu pet e encontre exatamente o que procura.</p>
+        </div>
+        
+        <div class="text-center bg-surface-elevated p-8 rounded-2xl border border-border">
+          <div class="w-16 h-16 bg-secondary-400 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="text-3xl">💬</span>
+          </div>
+          <h3 class="text-xl font-bold text-fg mb-4 font-heading">Conexão Direta</h3>
+          <p class="text-fg-muted">Converse diretamente com os donos das lojas para negociar preços e formas de pagamento.</p>
+        </div>
+        
+        <div class="text-center bg-surface-elevated p-8 rounded-2xl border border-border">
+          <div class="w-16 h-16 bg-accent-400 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span class="text-3xl">🤝</span>
+          </div>
+          <h3 class="text-xl font-bold text-fg mb-4 font-heading">Negociação Flexível</h3>
+          <p class="text-fg-muted">Negocie preços e condições diretamente com lojistas que conhecem seus produtos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works Section -->
+  <section class="py-20 bg-surface-elevated">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-fg font-heading mb-4">
+          Como Funciona
+        </h2>
+        <p class="text-lg text-fg-muted">Simples, rápido e eficiente</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-20 h-20 bg-primary-300 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">1</div>
+          <h3 class="text-xl font-bold text-fg mb-4 font-heading">Explore</h3>
+          <p class="text-fg-muted">Navegue pelos produtos e lojas disponíveis na plataforma</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-20 h-20 bg-secondary-300 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">2</div>
+          <h3 class="text-xl font-bold text-fg mb-4 font-heading">Converse</h3>
+          <p class="text-fg-muted">Entre em contato com o lojista através do chat integrado</p>
+        </div>
+        
+        <div class="text-center">
+          <div class="w-20 h-20 bg-accent-300 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">3</div>
+          <h3 class="text-xl font-bold text-fg mb-4 font-heading">Negocie</h3>
+          <p class="text-fg-muted">Acerte preço, forma de pagamento e entrega diretamente</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <% if @featured_products.any? %>
+    <section class="py-20 bg-surface">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-fg font-heading mb-4">
+            Produtos em Destaque
+          </h2>
+          <p class="text-lg text-fg-muted">Confira alguns dos produtos mais populares</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <% @featured_products.each do |product| %>
+            <%= render ProductCard::Component.new(product: product) %>
+          <% end %>
+        </div>
+        
+        <div class="text-center">
+          <%= link_to "Ver Todos os Produtos", products_path,
+                      class: "bg-primary-400 hover:bg-primary-300 text-white font-bold py-3 px-8 rounded-lg transition" %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+
+  <!-- CTA Section -->
+  <% if !user_signed_in? %>
+    <section class="py-20 bg-gradient-to-r from-accent-700 to-accent-500 text-white">
+      <div class="max-w-4xl mx-auto text-center px-4">
+        <h2 class="text-3xl md:text-5xl font-bold font-heading mb-6">
+          Pronto para começar?
+        </h2>
+        <p class="text-xl text-accent-100 mb-8">
+          Junte-se a milhares de pessoas que já conectaram com as melhores lojas pet
+        </p>
+        <% unless user_signed_in? %>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <%= link_to "Encontrar Produtos", new_user_registration_path,
+                        class: "bg-white text-accent-600 hover:bg-accent-50 font-bold py-4 px-8 rounded-lg text-lg transition" %>
+            <%= link_to "Abrir Loja", new_user_registration_path,
+                        class: "border-2 border-white hover:bg-white hover:text-accent-600 text-white font-bold py-4 px-8 rounded-lg text-lg transition" %>
+          </div>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</div>

@@ -1,0 +1,33 @@
+<%= form_with model: post, local: true do |f| %>
+  <% if post.errors.any? %>
+    <div class="mb-4 p-4 rounded bg-red-100 text-red-800">
+      <h2 class="font-semibold mb-2"><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <ul class="list-disc list-inside text-sm">
+        <% post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-4">
+    <%= f.label :description, class: "block text-sm font-medium mb-1" %>
+    <%= f.text_area :description, rows: 6, class: "w-full border rounded px-3 py-2" %>
+  </div>
+
+  <div class="flex flex-col gap-2 mb-4">
+    <%= f.label :image, class: "block text-sm font-medium mr-2" %>
+    <%= f.file_field :image, class: "w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring" %>
+  </div>
+
+  <% if post.image.attached? %>
+    <div class="mt-2">
+      <%= image_tag post.image.variant(resize_to_limit: [300, 300]), class: "rounded" %>
+    </div>
+  <% end %>
+
+  <div class="flex gap-2">
+    <%= f.submit class: "px-4 py-2 bg-accent-500 text-white rounded hover:bg-accent-600 transition" %>
+    <%= link_to "Cancel", (post.persisted? ? post : posts_path), class: "text-black px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 transition" %>
+  </div>
+<% end %>

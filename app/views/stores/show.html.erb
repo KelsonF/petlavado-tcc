@@ -16,15 +16,19 @@
           </div>
         <% end %>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h3 class="text-lg font-semibold text-fg mb-2 font-heading">Descrição</h3>
           <p class="text-fg-soft bg-surface-muted p-4 rounded"><%= @store.description %></p>
         </div>
         <div>
-          <h3 class="text-lg font-semibold text-fg mb-2 font-heading">Contato</h3>
-          <p class="text-fg-soft bg-surface-muted p-4 rounded"><%= @store.contact_info %></p>
+          <h3 class="text-lg font-semibold text-fg mb-2 font-heading">Endereco</h3>
+          <% if @store.address.present? %>
+            <p class="text-fg-soft bg-surface-muted p-4 rounded"><%= @store.address.full_address %></p>
+          <% else %>
+            <%= link_to "Adicionar Endereço", new_store_address_path(@store), class: "text-accent-400 hover:underline" %>
+          <% end %>
         </div>
       </div>
     </div>
@@ -51,7 +55,7 @@
           <p class="text-secondary-300 mb-6">Comece adicionando seu primeiro produto à loja.</p>
         </div>
       <% end %>
-    </div>  
+    </div>
 
     <!-- Chats Section for Store Owner -->
     <% if @store.owner == current_user %>

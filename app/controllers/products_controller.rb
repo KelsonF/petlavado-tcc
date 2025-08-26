@@ -6,6 +6,12 @@ class ProductsController < ApplicationController
   def index
     @products = Product.includes(:store)
     @products = filter_products(@products)
+
+    if params[:latitude].present? && params[:longitude].present?
+      user_location = [ params[:latitude].to_f, params[:longitude].to_f ]
+      @products = @products.sort_by { |product| distance_to_store(product.store, user_location) }
+    end
+
     @products = sort_products(@products)
   end
 
@@ -80,5 +86,10 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :price, :image)
+  end
+
+  def distance_to_store(store, user_location)
+    store_location = [ store.address.latitude, store.address.longitude ]
+    Geocoder::Calculations.distance_between(user_location, store_location)
   end
 end

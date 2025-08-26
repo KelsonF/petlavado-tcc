@@ -4,7 +4,15 @@ class MessagesController < ApplicationController
   def create
     @message = @chat.messages.create(message_params)
     @message.user = current_user
-    @message.save
+
+    if @message.save
+      @message.broadcast_append_to(
+        [ @chat, "messages" ],
+        target: "messages",
+        partial: "messages/message",
+        locals: { user: current_user, message: @message }
+      )
+    end
 
     render json: {}, status: :no_content
   end

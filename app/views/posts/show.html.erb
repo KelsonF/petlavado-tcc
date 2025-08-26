@@ -1,0 +1,75 @@
+<div class="max-w-3xl mx-auto py-8 px-4">
+  <div class="mb-6 flex items-center justify-between">
+    <h1 class="text-2xl font-heading font-bold">Post</h1>
+    <div class="flex gap-2 items-center relative" data-controller="menu">
+      <button
+          type="button"
+          data-action="click->menu#toggle"
+          class="p-2 rounded-lg hover:bg-neutral-100 transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-neutral-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 6h.01M12 12h.01M12 18h.01" />
+          </svg>
+        </button>
+
+        <div
+          data-menu-target="dropdown"
+          class="hidden absolute right-0 top-10 bg-surface-elevated border border-neutral-200 rounded-lg shadow-md w-32 py-2 z-20 mt-4"
+        >
+          <%= link_to "Back", posts_path, class: "block px-4 py-2 text-sm text-white text-neutral-700 hover:bg-neutral-100 transition" %>
+          <% if policy(@post).edit? %>
+            <%= link_to "Edit", edit_post_path(@post), class: "block px-4 py-2 text-sm text-white text-neutral-700 hover:bg-neutral-100 transition" %>
+          <% end %>
+
+          <% if policy(@post).destroy? %>
+            <%= button_to "Delete", @post, method: :delete, data: { confirm: "Are you sure?" },
+              class: "w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 transition"
+            %>
+          <% end %>
+        </div>
+    </div>
+  </div>
+
+  <div class="bg-surface-elevated rounded-lg border border-border shadow-sm p-6 space-y-6">
+    <% if @post.image.attached? %>
+      <div>
+        <%= image_tag @post.image, class: "w-full rounded" %>
+      </div>
+    <% end %>
+
+    <p class="text-base leading-relaxed text-fg"><%= simple_format(@post.description) %></p>
+
+    <div class="text-xs text-fg-soft flex justify-between items-center pt-4 border-t border-border">
+      <span>By <strong class="text-accent-500"><%= @post.profile.user.email %></strong></span>
+      <span>Created <%= time_ago_in_words(@post.created_at) %> ago</span>
+    </div>
+  </div>
+
+  <div class="mt-10">
+    <h3 class="text-xl font-bold mb-4">Comentários</h3>
+    <%= turbo_frame_tag "comments" do %>
+      <% @post.comments.each do |comment| %>
+        <div class="mb-4 p-4 bg-surface-elevated rounded border border-border">
+          <div class="w-full flex justify-between text-sm text-fg-soft mb-2">
+            <strong><%= comment.user.email %></strong>
+            <span class="ml-2"><%= l(comment.created_at, format: :short) %></span>
+          </div>
+          <div class="text-fg"><%= simple_format(comment.content) %></div>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <%= turbo_frame_tag "new_comment" do %>
+        <%= form_with model: [@post, Comment.new], local: false do |f| %>
+          <div class="mb-4">
+            <%= f.text_area :content, rows: 3, placeholder: "Deixe seu comentário...", class: "w-full px-3 py-2 border border-border rounded" %>
+          </div>
+          <%= f.submit "Comentar", class: "bg-primary-400 text-white font-bold px-4 py-2 rounded mb-5" %>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p class="text-fg-soft">Faça login para comentar.</p>
+    <% end %>
+  </div>
+</div>

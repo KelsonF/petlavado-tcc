@@ -1,5 +1,5 @@
-<div class="mb-2 flex even:justify-end odd:justify-start">
-  <div class="px-4 py-2 rounded-lg even:bg-primary-400 even:text-white odd:bg-surface-elevated odd:text-fg">
+<div class="<%= message_classes(message, user) %>">
+  <div class="<%= message_bubble_classes(message, user) %>">
     <span class="text-sm"><%= message.content %></span>
     <span class="block text-xs text-fg-soft mt-1"><%= l(message.created_at, format: :short) %></span>
   </div>

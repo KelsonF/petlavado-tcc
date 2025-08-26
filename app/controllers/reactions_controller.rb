@@ -1,24 +1,20 @@
 class ReactionsController < ApplicationController
-  before_action :set_product
+  before_action :set_post
 
   def create
-    @reaction = @product.reactions.find_or_initialize_by(user: current_user)
-    @reaction.reaction_type = params[:reaction_type]
+    @post.react!(current_user, params[:reaction_type])
 
     respond_to do |format|
-      if @reaction.save
-        format.turbo_stream
-        format.html { redirect_to store_product_path(@product.store, @product) }
-      else
-        format.turbo_stream
-        format.html { redirect_to store_product_path(@product.store, @product), alert: "Não foi possível registrar a reação." }
-      end
+      format.turbo_stream
+      format.html { redirect_to store_post_path(@post.store, @post) }
     end
+  rescue ActiveRecord::RecordInvalid
+    redirect_to store_post_path(@post.store, @post), alert: "Não foi possível registrar a reação."
   end
 
   private
 
-  def set_product
-    @product ||= Product.find(params[:product_id])
+  def set_post
+    @post ||= Post.find(params[:post_id])
   end
 end

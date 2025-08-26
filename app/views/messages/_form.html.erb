@@ -1,0 +1,9 @@
+<%= form_with model: [chat, Message.new],
+                url: chat_messages_path(chat),
+                local: false,
+                data: { controller: "message", message_target: "form" } do |f| %>
+    <div class="flex gap-2 mt-2">
+      <%= f.text_field :content, placeholder: "Digite sua mensagem...", class: "w-full px-3 py-2 border border-border rounded focus:outline-none focus:ring-1 focus:ring-primary-400 bg-surface-elevated text-fg placeholder:text-fg-soft" %>
+      <%= f.submit "Enviar", class: "bg-primary-400 text-white font-bold px-4 rounded hover:bg-secondary-400 transition" %>
+    </div>
+  <% end %>

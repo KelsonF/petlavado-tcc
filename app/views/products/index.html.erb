@@ -1,4 +1,4 @@
-<div class="h-full bg-surface p-6">
+<div class="h-full bg-surface p-6" data-controller="geolocation">
   <div class="max-w-7xl mx-auto">
     <!-- Header Section -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -6,10 +6,10 @@
         <h1 class="text-3xl md:text-4xl font-bold text-fg font-heading mb-2">Explore Produtos</h1>
         <p class="text-fg-muted text-lg">Descubra produtos incríveis para seu pet</p>
       </div>
-      
+
       <!-- Search and Filter Section -->
-      <%= form_with url: products_path, method: :get, local: true, 
-                   data: { controller: "search", turbo_frame: "products_content" }, 
+      <%= form_with url: products_path, method: :get, local: true,
+                   data: { controller: "search", turbo_frame: "products_content" },
                    class: "flex flex-col sm:flex-row gap-4 w-full md:w-auto" do |f| %>
         <div class="relative">
           <%= f.text_field :search, placeholder: "Buscar produtos...", value: params[:search],
@@ -32,11 +32,11 @@
               <span class="font-semibold text-secondary-300"><%= Store.joins(:products).distinct.count %></span> lojas disponíveis
             </span>
           </div>
-          
+
           <!-- Sort Form -->
-          <%= form_with url: products_path, method: :get, local: true, 
-                       data: { controller: "search" ,turbo_frame: "products_content" }, 
-                       class: "flex items-center gap-2 text-fg-soft" do |f| %>
+          <%= form_with url: products_path, method: :get, local: true,
+                       data: { controller: "search" ,turbo_frame: "products_content" },
+                       class: "w-full md:w-auto flex items-center justify-between gap-2 text-fg-soft" do |f| %>
             <%= f.hidden_field :search, value: params[:search] %>
             <span>Ordenar por:</span>
             <%= f.select :sort, options_for_select([
@@ -45,7 +45,7 @@
                   ["Maior preço", "price_desc"],
                   ["Nome", "name"]
                 ], params[:sort]),
-                {}, 
+                {},
                 { class: "px-3 py-1 border border-border rounded bg-surface text-fg text-sm focus:outline-none focus:ring-1 focus:ring-primary-400",
                   data: { action: "change->search#submit" } } %>
           <% end %>
@@ -75,14 +75,14 @@
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <% if params[:search].present? %>
-              <%= link_to "Limpar Busca", products_path, 
+              <%= link_to "Limpar Busca", products_path,
                           class: "bg-primary-400 hover:bg-primary-300 text-white font-bold py-3 px-6 rounded-lg transition" %>
             <% else %>
-              <%= link_to "Voltar ao Início", root_path, 
+              <%= link_to "Voltar ao Início", root_path, data: { turbo: false },
                           class: "bg-primary-400 hover:bg-primary-300 text-white font-bold py-3 px-6 rounded-lg transition" %>
             <% end %>
             <% if user_signed_in? && current_user.store_owner? && current_user.store.present? %>
-              <%= link_to "Cadastrar Produto", new_store_product_path(current_user.store), 
+              <%= link_to "Cadastrar Produto", new_store_product_path(current_user.store),
                           class: "bg-secondary-400 hover:bg-secondary-300 text-white font-bold py-3 px-6 rounded-lg transition" %>
             <% end %>
           </div>
@@ -95,7 +95,7 @@
       <div class="mt-16 bg-gradient-to-r from-accent-700 to-accent-500 rounded-2xl p-8 text-white text-center">
         <h3 class="text-2xl font-bold font-heading mb-4">Tem uma loja?</h3>
         <p class="text-accent-100 mb-6">Cadastre seus produtos e conecte-se com milhares de donos de pets!</p>
-        <%= link_to "Gerenciar Minha Loja", current_user.store, 
+        <%= link_to "Gerenciar Minha Loja", current_user.store,
                     class: "bg-white text-accent-600 hover:bg-accent-50 font-bold py-3 px-6 rounded-lg transition" %>
       </div>
     <% end %>

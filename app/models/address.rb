@@ -1,7 +1,15 @@
 class Address < ApplicationRecord
-  belongs_to :user
+  belongs_to :store
 
-  validates :zip_code, presence: true, length: { is: 5 }
+  validates :zip_code, presence: true
   validates :street_name, presence: true
   validates :number, presence: true
+  validates :city, presence: true
+
+  geocoded_by :full_address
+  after_validation :geocode, if: :will_save_change_to_street_name?
+
+  def full_address
+    [ street_name, number, city, zip_code ].compact.join(", ")
+  end
 end

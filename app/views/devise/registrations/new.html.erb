@@ -46,7 +46,7 @@
               form: f,
               name: :user_type,
               label: "Tipo de Usuário",
-              options: User.user_types.keys.map { |type| [type.humanize, type] },
+              options: User.select_user_types,
               required: true,
               placeholder: "Selecione seu tipo de usuário",
             ) %>

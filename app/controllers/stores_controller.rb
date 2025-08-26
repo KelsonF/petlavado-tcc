@@ -16,7 +16,7 @@ class StoresController < ApplicationController
     @store = current_user.build_store(store_params)
 
     if @store.save
-      redirect_to @store, notice: "Loja criada com sucesso! Bem-vindo ao seu painel administrativo."
+      redirect_to new_store_address_path(@store), notice: "Loja criada com sucesso! Bem-vindo ao seu painel administrativo."
     else
       render :new, status: :unprocessable_entity
     end
@@ -51,6 +51,6 @@ class StoresController < ApplicationController
   end
 
   def store_params
-    params.expect(store: [ :name, :description, :contact_info ])
+    params.expect(store: [ :name, :description ])
   end
 end

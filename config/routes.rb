@@ -8,17 +8,22 @@ Rails.application.routes.draw do
     resources :products, except: [ :index ]
   end
 
+  resources :stores do
+    resource :address, only: [ :new, :create, :edit, :update ]
+  end
+
   resources :products, only: [ :index ]
 
   resources :chats, only: [ :create, :show ] do
     resources :messages, only: [ :create ]
   end
 
-  resources :products, only: [ :show ] do
-    resources :comments, only: [ :create ]
+  resources :profiles, except: [ :index ] do
+    resources :posts, only: [ :create ]
   end
 
-  resources :products, only: [ :show ] do
+  resources :posts, except: [ :create ] do
     resources :reactions, only: [ :create ]
+    resources :comments, only: [ :create ]
   end
 end

@@ -7,10 +7,11 @@ class ChatsController < ApplicationController
 
   def create
     @chat = Chat.find_by(user: current_user, store_id: chat_params[:store_id])
+    @current_user = current_user
 
     unless @chat
       @chat = Chat.new(chat_params)
-      @chat.user = current_user
+      @chat.user = @current_user
       @chat.save
     end
 

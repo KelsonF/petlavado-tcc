@@ -1,20 +1,64 @@
-<nav class="bg-cyan-800 text-white py-4 shadow">
+<nav class="bg-cyan-800 text-white py-4 shadow" data-controller="hamburger-menu">
   <div class="px-7 mx-auto flex justify-between items-center">
-    <h2 class="font-heading font-bold text-xl">PETLAVADO</h2>
-  
+    <%= link_to "PETLAVADO",
+                products_path,
+                class: "font-heading font-bold text-xl hover:text-cyan-200 transition-colors duration-200"
+              %>
+
     <!-- Desktop menu -->
     <div class="hidden md:flex gap-3 items-center">
       <% if user_signed_in? %>
+        <%= link_to "Postagens", posts_path, class: "btn-secondary rounded-lg hover:bg-neutral-200 hover:text-neutral-800 transition-colors duration-200 px-4 py-2" %>
+        <% if current_user.profile.nil? %>
+          <%= link_to "Seu Perfil", current_user.profile, class: "btn-secondary rounded-lg hover:bg-neutral-200 hover:text-neutral-800 transition-colors duration-200 px-4 py-2" %>
+        <% end %>
         <% if current_user.store.nil? %>
-          <%= link_to "Create Store", new_store_path, class: "btn-primary" %>
+          <%= link_to "Criar Loja", new_store_path, class: "btn-primary rounded-lg hover:bg-neutral-200 hover:text-neutral-800 transition-colors duration-200 px-4 py-2" %>
         <% elsif current_user.store.present? %>
-          <%= link_to "My Store", current_user.store, class: "btn-accent" %>
+          <%= link_to "Minha Loja", current_user.store, class: "btn-accent rounded-lg hover:bg-neutral-200 hover:text-neutral-800 transition-colors duration-200 px-4 py-2" %>
         <% end %>
         <%= render Button::Component.new(
-          label: "Log out", 
-          url: destroy_user_session_path, 
-          method: :delete, 
+          label: "Log out",
+          url: destroy_user_session_path,
+          method: :delete,
           class: "bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+        ) %>
+      <% end %>
+    </div>
+
+    <div class="md:hidden flex flex-col justify-center items-center">
+      <button data-action="click->hamburger-menu#toggle"
+              data-hamburger-menu-target="button"
+              class="text-white hover:text-cyan-200 focus:outline-none focus:text-cyan-200 transition-colors duration-200"
+              aria-label="Toggle menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div data-hamburger-menu-target="menu"
+       class="md:hidden hidden px-7 py-4 border-t border-cyan-700">
+    <div class="flex flex-col gap-3">
+      <% if user_signed_in? %>
+        <%= link_to "Postagens", posts_path,
+                    class: "btn-secondary text-center rounded-lg hover:bg-neutral-200 hover:text-neutral-800 px-4 py-2",
+                    data: { action: "click->hamburger-menu#close" } %>
+        <% if current_user.store.nil? %>
+          <%= link_to "Criar Loja", new_store_path,
+                      class: "btn-primary text-center rounded-lg hover:bg-neutral-200 hover:text-neutral-800 px-4 py-2",
+                      data: { action: "click->hamburger-menu#close" } %>
+        <% elsif current_user.store.present? %>
+          <%= link_to "Minha Loja", current_user.store,
+                      class: "btn-accent text-center rounded-lg hover:bg-neutral-200 hover:text-neutral-800 px-4 py-2",
+                      data: { action: "click->hamburger-menu#close" } %>
+        <% end %>
+        <%= render Button::Component.new(
+          label: "Sair",
+          url: destroy_user_session_path,
+          method: :delete,
+          class: "bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 text-center w-full"
         ) %>
       <% end %>
     </div>

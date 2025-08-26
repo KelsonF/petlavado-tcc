@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_20_144334) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,8 +45,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
     t.string "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_addresses_on_user_id"
+    t.string "city", null: false
+    t.integer "store_id", null: false
+    t.float "latitude"
+    t.float "longitude"
+    t.index ["latitude", "longitude"], name: "index_addresses_on_latitude_and_longitude"
+    t.index ["store_id"], name: "index_addresses_on_store_id"
   end
 
   create_table "chats", force: :cascade do |t|
@@ -61,11 +65,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "product_id", null: false
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_comments_on_product_id"
+    t.integer "post_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
@@ -79,6 +83,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "profile_id", null: false
+    t.index ["profile_id"], name: "index_posts_on_profile_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -89,20 +101,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
     t.index ["store_id"], name: "index_products_on_store_id"
   end
 
+  create_table "profiles", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.text "bio"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
   create_table "reactions", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "product_id", null: false
     t.integer "reaction_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_id"], name: "index_reactions_on_product_id"
+    t.integer "post_id", null: false
+    t.index ["post_id"], name: "index_reactions_on_post_id"
     t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 
   create_table "stores", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
-    t.string "contact_info", null: false
     t.integer "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -124,15 +143,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "addresses", "users"
+  add_foreign_key "addresses", "stores"
   add_foreign_key "chats", "stores"
   add_foreign_key "chats", "users"
-  add_foreign_key "comments", "products"
+  add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "users"
+  add_foreign_key "posts", "profiles"
   add_foreign_key "products", "stores"
-  add_foreign_key "reactions", "products"
+  add_foreign_key "profiles", "users"
+  add_foreign_key "reactions", "posts"
   add_foreign_key "reactions", "users"
   add_foreign_key "stores", "users", column: "owner_id"
 end

@@ -1,0 +1,60 @@
+<div class="h-full flex items-center justify-center bg-surface">
+  <div class="w-full max-w-md bg-surface-elevated rounded-2xl shadow-xl p-10 border border-border">
+    <div class="mb-8 text-center">
+      <div class="flex justify-center mb-4">
+        <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent-300 shadow-lg">
+          <span class="text-4xl text-white">✏️</span>
+        </span>
+      </div>
+      <h2 class="text-3xl font-bold text-fg font-heading mb-2">Editar Endereço</h2>
+      <p class="text-fg-muted text-base">Atualize o endereço da <strong><%= @store.name %></strong></p>
+    </div>
+
+    <%= form_with(model: [@store, @address], local: true) do |f| %>
+      <% if @address.errors.any? %>
+        <div class="mb-4 text-danger-400 bg-danger-100 border border-danger-400 rounded p-3">
+          <ul class="list-disc list-inside">
+            <% @address.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-4">
+        <%= f.label :zip_code, "CEP", class: "block text-fg font-semibold mb-2" %>
+        <%= f.text_field :zip_code, autofocus: true, placeholder: "00000-000", class: "w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 bg-surface-elevated text-fg placeholder:text-fg-soft transition" %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :street_name, "Rua", class: "block text-fg font-semibold mb-2" %>
+        <%= f.text_field :street_name, placeholder: "Nome da rua", class: "w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 bg-surface-elevated text-fg placeholder:text-fg-soft transition" %>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <%= f.label :number, "Número", class: "block text-fg font-semibold mb-2" %>
+          <%= f.text_field :number, placeholder: "123", class: "w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 bg-surface-elevated text-fg placeholder:text-fg-soft transition" %>
+        </div>
+        <div>
+          <%= f.label :city, "Cidade", class: "block text-fg font-semibold mb-2" %>
+          <%= f.text_field :city, placeholder: "Cidade", class: "w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 bg-surface-elevated text-fg placeholder:text-fg-soft transition" %>
+        </div>
+      </div>
+
+      <div class="mb-6">
+        <%= f.label :state, "Estado", class: "block text-fg font-semibold mb-2" %>
+        <%= f.text_field :state, placeholder: "Estado", class: "w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 bg-surface-elevated text-fg placeholder:text-fg-soft transition" %>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <%= f.submit "Atualizar Endereço", class: "bg-primary-400 text-white font-bold py-3 px-4 rounded-lg hover:bg-secondary-400 transition" %>
+        <%= link_to "Cancelar", @store, class: "bg-border text-fg font-bold py-3 px-4 rounded-lg hover:bg-surface transition text-center" %>
+      </div>
+    <% end %>
+
+    <div class="mt-6 text-center">
+      <%= link_to "← Voltar para loja", @store, class: "text-accent-300 hover:underline text-sm" %>
+    </div>
+  </div>
+</div>

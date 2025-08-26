@@ -1,0 +1,46 @@
+<div class="bg-surface-elevated rounded-lg shadow-md hover:shadow-lg transition overflow-hidden border border-border">
+  <% if post.image.attached? %>
+    <div class="aspect-video bg-black/5">
+      <%= image_tag post.image, class: "w-full h-full object-cover", alt: "Post image" %>
+    </div>
+  <% else %>
+    <div class="aspect-video bg-surface-muted flex items-center justify-center border-b border-border">
+      <span class="text-3xl text-secondary-300 font-light">SEM IMAGEM</span>
+    </div>
+  <% end %>
+
+  <div class="p-4 flex flex-col gap-3">
+    <p class="text-sm text-fg-muted leading-relaxed line-clamp-4"><%= truncate(post.description, length: 180) %></p>
+    <div class="flex items-center justify-between text-xs text-fg-soft">
+      <span>By <strong class="text-accent-400"><%= post.user.email.split('@').first %></strong></span>
+      <span><%= time_ago_in_words(post.created_at) %> ago</span>
+    </div>
+    <div>
+      <%= link_to "View", post, class: "inline-block px-4 py-2 rounded font-semibold bg-accent-400 text-white hover:bg-primary-400 transition text-sm" %>
+    </div>
+  </div>
+
+  <div class="flex flex-col items-center justify-between mt-6 border-t border-white/10 p-5 gap-4">
+    <% if user_signed_in? %>
+      <div class="flex items-center gap-3">
+        <%= button_to post_reactions_path(post, reaction_type: :like),
+            method: :post,
+            form: { data: { turbo_frame: "reactions_#{post.id}" } },
+            class: "flex text-center gap-2 px-3 py-2 rounded-xl font-semibold bg-emerald-400 transition-all duration-200" do %>
+          👍 <span>Like</span>
+        <% end %>
+
+        <%= button_to post_reactions_path(post, reaction_type: :dislike),
+            method: :post,
+            form: { data: { turbo_frame: "reactions_#{post.id}" } },
+            class: "flex items-center gap-2 px-3 py-2 rounded-xl font-semibold bg-rose-400 transition-all duration-200" do %>
+          👎 <span>Dislikes</span>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div id="reactions_<%= post.id %>">
+      <%= render partial: "posts/reaction_count", locals: { post: post } %>
+    </div>
+  </div>
+</div>

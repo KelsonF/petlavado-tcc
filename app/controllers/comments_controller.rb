@@ -1,24 +1,24 @@
 class CommentsController < ApplicationController
-  before_action :set_product
+  before_action :set_post
 
   def create
-    @comment = @product.comments.new(comment_params)
+    @comment = @post.comments.new(comment_params)
     @comment.user = current_user
 
     if @comment.save
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to store_product_path(@product.store, @product), notice: "Comentário adicionado!" }
+        format.html { redirect_to post_path(@post), notice: "Comentário adicionado!" }
       end
     else
-      redirect_to store_product_path(@product.store, @product), alert: "Não foi possível adicionar o comentário."
+      redirect_to post_path(@post), alert: "Não foi possível adicionar o comentário."
     end
   end
 
   private
 
-  def set_product
-    @product = Product.find(params[:product_id])
+  def set_post
+    @post = Post.find(params[:post_id])
   end
 
   def comment_params

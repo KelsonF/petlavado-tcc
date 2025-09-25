@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     resources :products, except: [ :index ]
   end
 
+  resources :stores do
+    resource :address, only: [ :new, :create, :edit, :update ]
+  end
+
   resources :products, only: [ :index ]
 
   resources :chats, only: [ :create, :show ] do

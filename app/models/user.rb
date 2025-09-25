@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   has_one :store, foreign_key: "owner_id", class_name: "Store"
-  has_many :addresses, dependent: :destroy
   has_many :chats, dependent: :destroy
   has_many :messages, through: :chats
   has_many :comments, dependent: :destroy

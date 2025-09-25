@@ -3,6 +3,7 @@ class Store < ApplicationRecord
   has_many :products, dependent: :destroy
   has_many :chats, dependent: :destroy
   has_many :messages, through: :chats
+  has_one :address, dependent: :destroy
 
   validates :name, presence: true
   validates :description, presence: true

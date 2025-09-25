@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_25_005059) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,8 +45,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
     t.string "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_addresses_on_user_id"
+    t.string "city", null: false
+    t.integer "store_id", null: false
+    t.index ["store_id"], name: "index_addresses_on_store_id"
   end
 
   create_table "chats", force: :cascade do |t|
@@ -124,7 +125,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_233430) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "addresses", "users"
+  add_foreign_key "addresses", "stores"
   add_foreign_key "chats", "stores"
   add_foreign_key "chats", "users"
   add_foreign_key "comments", "products"

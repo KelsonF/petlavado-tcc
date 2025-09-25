@@ -9,7 +9,7 @@
           <span class="text-primary-200">Mundo Pet</span>
         </h1>
         <p class="text-xl md:text-2xl text-primary-100 mb-8 max-w-3xl mx-auto">
-          Conectamos donos de pets com as melhores lojas especializadas. 
+          Conectamos donos de pets com as melhores lojas especializadas.
           Encontre produtos, converse com os lojistas e negocie diretamente com quem entende do assunto.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -62,7 +62,7 @@
           Uma plataforma que facilita a conexão entre donos de pets e lojistas especializados
         </p>
       </div>
-      
+
       <div class="grid md:grid-cols-3 gap-8">
         <div class="text-center bg-surface-elevated p-8 rounded-2xl border border-border">
           <div class="w-16 h-16 bg-primary-400 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -71,7 +71,7 @@
           <h3 class="text-xl font-bold text-fg mb-4 font-heading">Descubra Produtos</h3>
           <p class="text-fg-muted">Explore milhares de produtos para seu pet e encontre exatamente o que procura.</p>
         </div>
-        
+
         <div class="text-center bg-surface-elevated p-8 rounded-2xl border border-border">
           <div class="w-16 h-16 bg-secondary-400 rounded-full flex items-center justify-center mx-auto mb-6">
             <span class="text-3xl">💬</span>
@@ -79,7 +79,7 @@
           <h3 class="text-xl font-bold text-fg mb-4 font-heading">Conexão Direta</h3>
           <p class="text-fg-muted">Converse diretamente com os donos das lojas para negociar preços e formas de pagamento.</p>
         </div>
-        
+
         <div class="text-center bg-surface-elevated p-8 rounded-2xl border border-border">
           <div class="w-16 h-16 bg-accent-400 rounded-full flex items-center justify-center mx-auto mb-6">
             <span class="text-3xl">🤝</span>
@@ -100,20 +100,20 @@
         </h2>
         <p class="text-lg text-fg-muted">Simples, rápido e eficiente</p>
       </div>
-      
+
       <div class="grid md:grid-cols-3 gap-8">
         <div class="text-center">
           <div class="w-20 h-20 bg-primary-300 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">1</div>
           <h3 class="text-xl font-bold text-fg mb-4 font-heading">Explore</h3>
           <p class="text-fg-muted">Navegue pelos produtos e lojas disponíveis na plataforma</p>
         </div>
-        
+
         <div class="text-center">
           <div class="w-20 h-20 bg-secondary-300 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">2</div>
           <h3 class="text-xl font-bold text-fg mb-4 font-heading">Converse</h3>
           <p class="text-fg-muted">Entre em contato com o lojista através do chat integrado</p>
         </div>
-        
+
         <div class="text-center">
           <div class="w-20 h-20 bg-accent-300 rounded-full flex items-center justify-center mx-auto mb-6 text-white text-2xl font-bold">3</div>
           <h3 class="text-xl font-bold text-fg mb-4 font-heading">Negocie</h3>
@@ -133,13 +133,13 @@
           </h2>
           <p class="text-lg text-fg-muted">Confira alguns dos produtos mais populares</p>
         </div>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <% @featured_products.each do |product| %>
             <%= render ProductCard::Component.new(product: product) %>
           <% end %>
         </div>
-        
+
         <div class="text-center">
           <%= link_to "Ver Todos os Produtos", products_path,
                       class: "bg-primary-400 hover:bg-primary-300 text-white font-bold py-3 px-8 rounded-lg transition" %>

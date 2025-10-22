@@ -10,12 +10,31 @@
       <% if user_signed_in? %>
         <%= link_to "Postagens", posts_path, class: "btn-secondary rounded-lg hover:bg-neutral-200 hover:text-neutral-800 transition-colors duration-200 px-4 py-2" %>
         <% if current_user.profile.nil? %>
-          <%= link_to "Seu Perfil", current_user.profile, class: "btn-secondary rounded-lg hover:bg-neutral-200 hover:text-neutral-800 transition-colors duration-200 px-4 py-2" %>
+          <%= render Navbar::Button::Component.new(
+            text: "Crie seu perfil",
+            url: new_profile_path,
+            theme: :default
+          ) %>
+        <% end %>
+        <% if current_user.profile.present? %>
+          <%= render Navbar::Button::Component.new(
+            text: "Seu perfil",
+            url: current_user.profile,
+            theme: :primary
+          ) %>
         <% end %>
         <% if current_user.store.nil? %>
-          <%= link_to "Criar Loja", new_store_path, class: "btn-primary rounded-lg hover:bg-neutral-200 hover:text-neutral-800 transition-colors duration-200 px-4 py-2" %>
+          <%= render Navbar::Button::Component.new(
+            text: "Criar nova loja",
+            url: new_store_path,
+            theme: :default
+          ) %>
         <% elsif current_user.store.present? %>
-          <%= link_to "Minha Loja", current_user.store, class: "btn-accent rounded-lg hover:bg-neutral-200 hover:text-neutral-800 transition-colors duration-200 px-4 py-2" %>
+          <%= render Navbar::Button::Component.new(
+            text: "Minha loja",
+            url: current_user.store,
+            theme: :default
+          ) %>
         <% end %>
         <%= render Button::Component.new(
           label: "Log out",

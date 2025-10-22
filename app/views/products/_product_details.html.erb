@@ -24,7 +24,7 @@
     <span class="text-sm text-fg-soft">Loja: <%= link_to store.name, store, class: "text-accent-300 hover:underline font-semibold" %></span>
   </div>
 
-  <% if store.owner == current_user %>
+  <% if policy(store).manage_products? %>
     <div class="flex gap-4 mb-6">
       <%= link_to "Editar", edit_store_product_path(store, product), class: "px-6 py-3 rounded font-semibold bg-primary-400 text-white hover:bg-secondary-400 transition" %>
       <%= link_to "Excluir", [store, product], method: :delete,

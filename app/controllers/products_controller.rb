@@ -79,9 +79,7 @@ class ProductsController < ApplicationController
   end
 
   def authorize_store_owner!
-    unless @store.owner == current_user
-      redirect_to root_path, alert: "Você não tem permissão para essa ação."
-    end
+    authorize @store, :manage_products?
   end
 
   def product_params

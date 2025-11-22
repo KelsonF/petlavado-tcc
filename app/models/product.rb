@@ -8,7 +8,5 @@ class Product < ApplicationRecord
 
   private
 
-  def self.search(query)
-    where("name LIKE ? OR description LIKE ?", "%#{query}%", "%#{query}%")
-  end
+  scope :search, ->(query) { where("name LIKE ? OR description LIKE ?", "%#{query}%", "%#{query}%") }
 end

@@ -2,7 +2,8 @@ class Post < ApplicationRecord
   has_one_attached :image
   has_many :comments, dependent: :destroy
   has_many :reactions, dependent: :destroy
-  belongs_to :user
+  belongs_to :profile
+  has_one :user, through: :profile
 
   def react!(user, reaction_type)
     nil unless Reaction.reaction_types.key?(reaction_type)

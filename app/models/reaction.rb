@@ -4,4 +4,5 @@ class Reaction < ApplicationRecord
 
   enum :reaction_type, [ :like, :dislike ]
   validates :reaction_type, presence: true
+  validates :user_id, uniqueness: { scope: :post_id }
 end

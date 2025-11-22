@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :messages, through: :chats
   has_many :comments, dependent: :destroy
   has_many :reactions, dependent: :destroy
-  has_many :posts, dependent: :destroy
+  has_many :posts, through: :profile
 
   validates :user_type, presence: true
 

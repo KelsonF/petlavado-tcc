@@ -1,0 +1,6 @@
+<%= form_with model: [post, Comment.new], local: false do |f| %>
+  <div class="mb-4">
+    <%= f.text_area :content, rows: 3, placeholder: "Deixe seu comentário...", class: "w-full px-3 py-2 border border-border rounded" %>
+  </div>
+  <%= f.submit "Comentar", class: "bg-primary-400 text-white font-bold px-4 py-2 rounded mb-5" %>
+<% end %>

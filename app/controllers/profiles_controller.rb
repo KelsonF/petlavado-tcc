@@ -39,7 +39,7 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:profile).permit(:bio)
+    params.require(:profile).permit(:bio, :display_name, :avatar)
   end
 
   def validates_profile_ownership

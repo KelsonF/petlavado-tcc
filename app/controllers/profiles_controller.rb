@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: %i[ show ]
+  before_action :set_profile, only: %i[ show edit update destroy ]
 
   def show;end
 
@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    @profile = current_user.profile(profile_params)
+    @profile = current_user.build_profile(profile_params)
 
     if @profile.save
       redirect_to @profile, notice: "Perfil criado com sucesso"
@@ -35,7 +35,7 @@ class ProfilesController < ApplicationController
   private
 
   def set_profile
-    @profile = Profile.find(params[:profile_id])
+    @profile = Profile.find(params[:id])
   end
 
   def profile_params

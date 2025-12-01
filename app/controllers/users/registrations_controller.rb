@@ -56,7 +56,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     when "store_owner"
       new_store_path
     when "customer"
-      root_path
+      new_profile_path
     else
       root_path
     end

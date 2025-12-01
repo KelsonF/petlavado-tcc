@@ -27,7 +27,7 @@
   </div>
 
   <div class="flex justify-end gap-4">
-    <%= link_to "Cancel", profile_path(profile), class: "px-4 py-2 border border-border rounded-lg text-fg hover:bg-surface-elevated transition" %>
+    <%= link_to "Cancel", profile.persisted? ? profile_path(profile) : root_path, class: "px-4 py-2 border border-border rounded-lg text-fg hover:bg-surface-elevated transition" %>
     <%= form.submit "Save Profile", class: "px-4 py-2 bg-primary-500 text-white font-bold rounded-lg hover:bg-primary-600 transition cursor-pointer" %>
   </div>
 <% end %>

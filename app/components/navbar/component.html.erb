@@ -20,7 +20,7 @@
           <%= render Navbar::Button::Component.new(
             text: "Seu perfil",
             url: current_user.profile,
-            theme: :primary
+            theme: :default
           ) %>
         <% end %>
         <% if current_user.store.nil? %>

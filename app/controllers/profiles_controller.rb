@@ -11,7 +11,7 @@ class ProfilesController < ApplicationController
     @profile = current_user.build_profile(profile_params)
 
     if @profile.save
-      redirect_to @profile, notice: "Perfil criado com sucesso"
+      redirect_to posts_path, notice: "Perfil criado com sucesso"
     else
       render :new, status: :unprocessable_entity
     end

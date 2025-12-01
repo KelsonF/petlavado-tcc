@@ -55,7 +55,6 @@
       <%= turbo_frame_tag "new_comment" do %>
         <%= render "comments/form_post", post: @post %>
       <% end %>
-    <% end %>
     <% else %>
       <p class="text-fg-soft">Faça login para comentar.</p>
     <% end %>

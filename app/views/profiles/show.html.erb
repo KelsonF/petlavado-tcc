@@ -18,6 +18,7 @@
         <h1 class="text-2xl font-heading font-bold"><%= @profile.display_name.presence || @profile.user.email.split('@').first %></h1>
         
         <% if current_user == @profile.user %>
+          <%= link_to "New Post", new_post_path, class: "px-4 py-1.5 bg-primary text-white rounded font-medium text-sm hover:bg-primary-hover transition" %>
           <%= link_to "Edit Profile", edit_profile_path(@profile), class: "px-4 py-1.5 bg-surface-elevated border border-border rounded font-medium text-sm hover:bg-neutral-700 transition" %>
         <% end %>
       </div>
@@ -26,7 +27,6 @@
         <div class="text-center md:text-left">
           <span class="font-bold block md:inline"><%= @profile.posts.count %></span> posts
         </div>
-        <!-- Add followers/following here later if needed -->
       </div>
 
       <div class="text-fg-soft max-w-md">

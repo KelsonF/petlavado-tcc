@@ -18,11 +18,9 @@ Rails.application.routes.draw do
     resources :messages, only: [ :create ]
   end
 
-  resources :profiles, except: [ :index ] do
-    resources :posts, only: [ :create ]
-  end
+  resources :profiles, except: [ :index ]
 
-  resources :posts, except: [ :create ] do
+  resources :posts do
     resources :reactions, only: [ :create ]
     resources :comments, only: [ :create ]
   end

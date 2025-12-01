@@ -23,11 +23,11 @@
   <div>
     <%= form.label :bio, class: "block text-sm font-medium text-fg mb-2" %>
     <%= form.text_area :bio, rows: 4, class: "w-full px-3 py-2 bg-surface border border-border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-fg placeholder-fg-muted" %>
-    <p class="mt-1 text-sm text-fg-muted">Write a short bio about yourself.</p>
+    <p class="mt-1 text-sm text-fg-muted">Escreva uma breve bio sobre você.</p>
   </div>
 
   <div class="flex justify-end gap-4">
-    <%= link_to "Cancel", profile.persisted? ? profile_path(profile) : root_path, class: "px-4 py-2 border border-border rounded-lg text-fg hover:bg-surface-elevated transition" %>
-    <%= form.submit "Save Profile", class: "px-4 py-2 bg-primary-500 text-white font-bold rounded-lg hover:bg-primary-600 transition cursor-pointer" %>
+    <%= link_to "Cancelar", profile.persisted? ? profile_path(profile) : root_path, class: "px-4 py-2 border border-border rounded-lg text-fg hover:bg-surface-elevated transition" %>
+    <%= form.submit "Salvar Perfil", class: "px-4 py-2 bg-primary-500 text-white font-bold rounded-lg hover:bg-primary-600 transition cursor-pointer" %>
   </div>
 <% end %>
